@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Lecture Platform</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      background: #0a0c10;
+      color: #e8edf5;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 54px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logo {
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    .logo .l1 {
+      color: #e8edf5;
+    }
+
+    .logo .l2 {
+      color: #8ab4d4;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      font-size: 13px;
+      color: rgba(232, 237, 245, 0.45);
+      text-decoration: none;
+    }
+
+    .nav-link:hover {
+      color: #8ab4d4;
+    }
+
+    .nav-btn {
+      font-size: 13px;
+      padding: 6px 16px;
+      border: 1px solid rgba(138, 180, 212, 0.5);
+      border-radius: 6px;
+      background: transparent;
+      color: #8ab4d4;
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      background: rgba(138, 180, 212, 0.08);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 1.5rem 3.5rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-brand {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-brand .l1 {
+      color: #e8edf5;
+    }
+
+    .hero-brand .l2 {
+      color: #8ab4d4;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: #e8edf5;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 span {
+      color: #8ab4d4;
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: rgba(232, 237, 245, 0.45);
+      max-width: 420px;
+      margin: 0 auto 2.25rem;
+      line-height: 1.7;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-main {
+      background: #8ab4d4;
+      color: #0a0c10;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 24px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-main:hover {
+      background: #9dc3df;
+    }
+
+    .btn-sec {
+      background: transparent;
+      color: rgba(232, 237, 245, 0.6);
+      font-size: 14px;
+      padding: 10px 24px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      cursor: pointer;
+    }
+
+    .btn-sec:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    /* UPLOAD */
+    .upload {
+      padding: 3rem 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .upload-inner {
+      max-width: 520px;
+      margin: 0 auto;
+      background: #0e1117;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
+      padding: 2rem;
+    }
+
+    .upload-inner h3 {
+      font-size: 16px;
+      font-weight: 500;
+      color: #e8edf5;
+      margin-bottom: 0.3rem;
+    }
+
+    .upload-inner p {
+      font-size: 13px;
+      color: rgba(232, 237, 245, 0.4);
+      margin-bottom: 1rem;
+    }
+
+    .url-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 1rem;
+    }
+
+    .url-row input {
+      flex: 1;
+      background: #0a0c10;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      color: #e8edf5;
+      font-size: 13px;
+      padding: 9px 12px;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .url-row input::placeholder {
+      color: rgba(232, 237, 245, 0.2);
+    }
+
+    .url-row input:focus {
+      border-color: rgba(138, 180, 212, 0.4);
+    }
+
+    .url-row button {
+      background: #8ab4d4;
+      color: #0a0c10;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 9px 18px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+
+    .url-row button:hover {
+      background: #9dc3df;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 1rem 0;
+      font-size: 12px;
+      color: rgba(232, 237, 245, 0.25);
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .dropzone {
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 1.75rem;
+      text-align: center;
+      color: rgba(232, 237, 245, 0.25);
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .dropzone:hover {
+      border-color: rgba(138, 180, 212, 0.3);
+      color: rgba(232, 237, 245, 0.4);
+    }
+
+    /* STEPS */
+    .steps {
+      padding: 3rem 1.5rem 4rem;
+    }
+
+    .steps-label {
+      font-size: 11px;
+      color: rgba(232, 237, 245, 0.3);
+      margin-bottom: 1.5rem;
+      text-align: center;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .step-card {
+      background: #0e1117;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 1.1rem;
+    }
+
+    .step-n {
+      font-size: 11px;
+      color: #8ab4d4;
+      margin-bottom: 0.6rem;
+    }
+
+    .step-card h4 {
+      font-size: 13px;
+      font-weight: 500;
+      color: #e8edf5;
+      margin-bottom: 0.35rem;
+    }
+
+    .step-card p {
+      font-size: 12px;
+      color: rgba(232, 237, 245, 0.35);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 500px) {
+      .steps-row {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 26px;
+      }
+
+      nav {
+        padding: 0 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="logo"><span class="l1">Smart Lecture </span><span class="l2">Platform</span></div>
+    <div class="nav-right">
+      <a class="nav-link" href="#">about</a>
+      <a class="nav-link" href="#">how it works</a>
+      <a href="login.html" class="nav-btn">log in</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-brand"><span class="l1">Smart Lecture </span><span class="l2">Platform</span></div>
+    <h1>lectures are long.<span> your time isn't.</span></h1>
+    <p>upload your recording and we'll transcribe it, cut the silence, and give you something actually useful to study
+      from.</p>
+    <div class="hero-btns">
+      <a href="login.html" class="btn-main">try it out</a>
+      <button class="btn-sec">see an example</button>
+    </div>
+  </section>
+
+  <section class="upload">
+    <div class="upload-inner">
+      <h3>upload your lecture</h3>
+      <p>paste a video url, or drop the file directly</p>
+      <div class="url-row">
+        <input type="text" placeholder="https://URLvideo.com/..." />
+        <button>process</button>
+      </div>
+      <div class="divider">or</div>
+      <div class="dropzone">drag your video here</div>
+    </div>
+  </section>
+
+  <section class="steps">
+    <div class="steps-label">how it works</div>
+    <div class="steps-row">
+      <div class="step-card">
+        <div class="step-n">01</div>
+        <h4>upload the video</h4>
+        <p>link or file, whatever you've got</p>
+      </div>
+      <div class="step-card">
+        <div class="step-n">02</div>
+        <h4>ai processes it</h4>
+        <p>transcribes and removes silence automatically</p>
+      </div>
+      <div class="step-card">
+        <div class="step-n">03</div>
+        <h4>read the transcript</h4>
+        <p>clean text, saved and ready to study</p>
+      </div>
+    </div>
+  </section>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCeHn5ACani1scy-GsrAfGha-ohISaWV2w",
+      authDomain: "smart-lecture-27d96.firebaseapp.com",
+      projectId: "smart-lecture-27d96",
+      storageBucket: "smart-lecture-27d96.firebasestorage.app",
+      messagingSenderId: "27013760765",
+      appId: "1:27013760765:web:d66cd3c9c21f02f9cce094"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    console.log("Firebase conectado:", app.name);
+  </script>
+</body>
+
+</html>

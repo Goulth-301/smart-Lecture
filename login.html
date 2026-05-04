@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log in — Smart Lecture Platform</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      background: #0a0c10;
+      color: #e8edf5;
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 54px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .logo { font-size: 17px; font-weight: 500; text-decoration: none; }
+    .logo .l1 { color: #e8edf5; }
+    .logo .l2 { color: #8ab4d4; }
+
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background: #0e1117;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      margin: 0 1rem;
+    }
+
+    .card h2 {
+      font-size: 20px;
+      font-weight: 500;
+      color: #e8edf5;
+      margin-bottom: 0.4rem;
+    }
+    .card .subtitle {
+      font-size: 13px;
+      color: rgba(232,237,245,0.4);
+      margin-bottom: 2rem;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: rgba(232,237,245,0.5);
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.04em;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      background: #0a0c10;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      color: #e8edf5;
+      font-size: 14px;
+      padding: 10px 14px;
+      outline: none;
+      font-family: inherit;
+      margin-bottom: 1.25rem;
+      transition: border-color 0.2s;
+    }
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: rgba(138,180,212,0.5);
+    }
+    input::placeholder { color: rgba(232,237,245,0.2); }
+
+    /* ─── reCAPTCHA placeholder ─────────────────────────── */
+    .recaptcha-placeholder {
+      width: 100%;
+      border: 1px dashed rgba(255,255,255,0.15);
+      border-radius: 6px;
+      padding: 1rem;
+      text-align: center;
+      color: rgba(232,237,245,0.25);
+      font-size: 12px;
+      margin-bottom: 1.25rem;
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .recaptcha-placeholder::before {
+      content: '';
+      display: inline-block;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: rgba(138,180,212,0.3);
+    }
+    /* ──────────────────────────────────────────────────────── */
+
+    .btn-login {
+      width: 100%;
+      background: #8ab4d4;
+      color: #0a0c10;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 11px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+      margin-bottom: 1rem;
+    }
+    .btn-login:hover { background: #9dc3df; }
+    .btn-login:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .error-msg {
+      font-size: 12px;
+      color: #F09595;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .error-msg.visible { display: block; }
+
+    .footer-link {
+      text-align: center;
+      font-size: 13px;
+      color: rgba(232,237,245,0.35);
+    }
+    .footer-link a {
+      color: #8ab4d4;
+      text-decoration: none;
+    }
+    .footer-link a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="index.html">
+      <span class="l1">Smart Lecture </span><span class="l2">Platform</span>
+    </a>
+  </nav>
+
+  <div class="card">
+    <h2>Welcome back</h2>
+    <p class="subtitle">log in to access your transcripts</p>
+
+    <label for="email">email</label>
+    <input type="email" id="email" placeholder="you@email.com" />
+
+    <label for="password">password</label>
+    <input type="password" id="password" placeholder="••••••••" />
+
+    <!-- reCAPTCHA goes here — add widget when ready -->
+    <div class="recaptcha-placeholder" id="recaptcha-container">
+      reCAPTCHA will appear here
+    </div>
+
+    <p class="error-msg" id="error-msg"></p>
+
+    <button class="btn-login" id="login-btn" onclick="handleLogin()">log in</button>
+
+    <p class="footer-link">
+      don't have an account? <a href="register.html">sign up</a>
+    </p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCeHn5ACani1scy-GsrAfGha-ohISaWV2w",
+      authDomain: "smart-lecture-27d96.firebaseapp.com",
+      projectId: "smart-lecture-27d96",
+      storageBucket: "smart-lecture-27d96.firebasestorage.app",
+      messagingSenderId: "27013760765",
+      appId: "1:27013760765:web:d66cd3c9c21f02f9cce094"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    window.handleLogin = async function () {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const errorMsg = document.getElementById("error-msg");
+      const btn = document.getElementById("login-btn");
+
+      errorMsg.classList.remove("visible");
+
+      if (!email || !password) {
+        errorMsg.textContent = "please fill in all fields.";
+        errorMsg.classList.add("visible");
+        return;
+      }
+
+      // ── reCAPTCHA check goes here ──────────────────────────
+      // When reCAPTCHA is ready, verify the token before proceeding.
+      // Example:
+      // const recaptchaToken = grecaptcha.getResponse();
+      // if (!recaptchaToken) {
+      //   errorMsg.textContent = "please complete the reCAPTCHA.";
+      //   errorMsg.classList.add("visible");
+      //   return;
+      // }
+      // ───────────────────────────────────────────────────────
+
+      btn.disabled = true;
+      btn.textContent = "logging in...";
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        window.location.href = "dashboard.html";
+      } catch (err) {
+        let msg = "something went wrong. try again.";
+        if (err.code === "auth/user-not-found" || err.code === "auth/wrong-password" || err.code === "auth/invalid-credential") {
+          msg = "incorrect email or password.";
+        } else if (err.code === "auth/too-many-requests") {
+          msg = "too many attempts. try again later.";
+        }
+        errorMsg.textContent = msg;
+        errorMsg.classList.add("visible");
+        btn.disabled = false;
+        btn.textContent = "log in";
+      }
+    };
+
+    document.getElementById("password").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") handleLogin();
+    });
+  </script>
+
+</body>
+</html>
