@@ -1,0 +1,541 @@
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  .wrap {
+    background: #1a1a1f;
+    color: #ccc;
+    font-family: monospace;
+    padding: 2rem 1.5rem 3rem;
+  }
+
+  .top-label {
+    text-align: center;
+    font-size: 11px;
+    color: #555;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+
+  .main-title {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #eee;
+    font-family: sans-serif;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .sub {
+    text-align: center;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 2.5rem;
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .step {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+  }
+
+  .step-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 40px;
+  }
+
+  .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid #4a9eff;
+    color: #4a9eff;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-line {
+    width: 2px;
+    flex: 1;
+    background: #2a2a35;
+    min-height: 20px;
+    margin-top: 6px;
+  }
+
+  .step-content {
+    flex: 1;
+    padding-bottom: 0.5rem;
+  }
+
+  .step-title {
+    font-size: 14px;
+    color: #eee;
+    font-family: sans-serif;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .step-desc {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  .sketch {
+    border: 1px solid #2a2a35;
+    border-radius: 8px;
+    background: #13131a;
+    overflow: hidden;
+  }
+
+  .sketch-header {
+    background: #1e1e28;
+    padding: 6px 10px;
+    font-size: 10px;
+    color: #444;
+    border-bottom: 1px solid #2a2a35;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .dot-r {
+    background: #ff5f57;
+  }
+
+  .dot-y {
+    background: #febc2e;
+  }
+
+  .dot-g {
+    background: #28c840;
+  }
+
+  .sketch-body {
+    padding: 10px 12px;
+  }
+
+  .url-bar {
+    background: #1e1e28;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 11px;
+    color: #4a9eff;
+    margin-bottom: 8px;
+  }
+
+  .upload-zone {
+    border: 2px dashed #333;
+    border-radius: 6px;
+    padding: 14px;
+    text-align: center;
+    font-size: 11px;
+    color: #444;
+  }
+
+  .captcha-mock {
+    border: 1px solid #333;
+    border-radius: 6px;
+    background: #1a1a24;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .chk {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #4a9eff;
+    border-radius: 3px;
+    background: rgba(74, 158, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .captcha-logo {
+    font-size: 9px;
+    color: #444;
+    text-align: right;
+    line-height: 1.4;
+  }
+
+  .arrow-note {
+    font-size: 10px;
+    color: #444;
+    margin-top: 6px;
+    padding-left: 4px;
+  }
+
+  .waveform-wrap {
+    padding: 10px 12px;
+  }
+
+  .wf-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .wf-lbl {
+    font-size: 10px;
+    color: #444;
+    min-width: 50px;
+  }
+
+  .bars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 28px;
+    flex: 1;
+  }
+
+  .b {
+    border-radius: 1px;
+    flex: 1;
+  }
+
+  .b-on {
+    background: #4a9eff;
+  }
+
+  .b-off {
+    background: #222;
+  }
+
+  .b-cut {
+    background: #3a1515;
+    border: 1px solid #5a2020;
+  }
+
+  .wf-note {
+    font-size: 10px;
+    color: #444;
+    margin-top: 4px;
+    padding-left: 58px;
+  }
+
+  .transcript-wrap {
+    padding: 10px 12px;
+    border-top: 1px solid #222;
+  }
+
+  .t-line {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 5px;
+    font-size: 11px;
+  }
+
+  .t-ts {
+    color: #4a9eff;
+    min-width: 38px;
+  }
+
+  .t-txt {
+    color: #888;
+  }
+
+  .t-txt.cut {
+    color: #3a2a2a;
+    text-decoration: line-through;
+  }
+
+  .firestore-wrap {
+    padding: 10px 12px;
+  }
+
+  .doc-block {
+    border: 1px solid #2a2a35;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 11px;
+    line-height: 1.8;
+  }
+
+  .k {
+    color: #e8a838;
+  }
+
+  .v-s {
+    color: #ce9178;
+  }
+
+  .v-n {
+    color: #b5cea8;
+  }
+
+  .stack-note {
+    font-size: 10px;
+    color: #555;
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid #222;
+    margin: 2.5rem 0;
+  }
+
+  .summary-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .sum-card {
+    border: 1px solid #2a2a35;
+    border-radius: 8px;
+    background: #13131a;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .sum-name {
+    font-size: 12px;
+    color: #bbb;
+    font-family: sans-serif;
+    margin-bottom: 3px;
+  }
+
+  .sum-role {
+    font-size: 10px;
+    color: #444;
+    line-height: 1.4;
+  }
+</style>
+
+
+
+<div class="wrap">
+  <p class="top-label">// how it works</p>
+  <h2 class="main-title">the process, step by step</h2>
+  <p class="sub">basically upload the video and the system does the rest</p>
+
+  <div class="steps">
+
+    <a href="index.html"
+      style="position:fixed; top:20px; left:20px; color:white; text-decoration:none; border:1px solid #444; padding:8px 14px; border-radius:8px; font-size:13px;">
+      ← back to home
+    </a>
+
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">1</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">upload your video (or paste the link)</div>
+        <div class="step-desc">can be a direct file or a url. as long as it's a video, it works.</div>
+        <div class="sketch">
+          <div class="sketch-header">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div><span style="margin-left:6px">localhost:3000</span>
+          </div>
+          <div class="sketch-body">
+            <div class="url-bar">https://drive.google.com/file/d/tuesday_class...</div>
+            <div class="upload-zone">
+              <div style="font-size:22px;color:#555;margin-bottom:4px">&#8679;</div>drag your video here or paste the
+              link above
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">2</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">first you pass the captcha</div>
+        <div class="step-desc">before saving anything, we verify you're human. if you don't pass this, nothing gets
+          written to the database.</div>
+        <div class="sketch">
+          <div class="sketch-body" style="padding:12px;">
+            <div class="captcha-mock">
+              <div class="chk"><svg width="12" height="12" viewBox="0 0 12 12">
+                  <path d="M2 6l3 3 5-5" stroke="#4a9eff" stroke-width="2" fill="none" stroke-linecap="round" />
+                </svg></div>
+              <span style="font-size:12px;color:#bbb;flex:1">I'm not a robot</span>
+              <div class="captcha-logo">reCAPTCHA<br>privacy · terms</div>
+            </div>
+            <p class="arrow-note">→ if it fails: everything is blocked, nothing writes to Firestore</p>
+            <p class="arrow-note">→ if it passes: continues to step 3</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">3</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">the AI transcribes and cuts the silence</div>
+        <div class="step-desc">the Video Intelligence API detects when the professor is talking and when they're not.
+          silence segments get flagged and removed from the final video.</div>
+        <div class="sketch">
+          <div class="sketch-header">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div><span style="margin-left:6px">video intelligence api</span>
+          </div>
+          <div class="waveform-wrap">
+            <div class="wf-row">
+              <span class="wf-lbl">original</span>
+              <div class="bars">
+                <div class="b b-on" style="height:70%"></div>
+                <div class="b b-on" style="height:90%"></div>
+                <div class="b b-on" style="height:60%"></div>
+                <div class="b b-on" style="height:85%"></div>
+                <div class="b b-off" style="height:15%"></div>
+                <div class="b b-off" style="height:10%"></div>
+                <div class="b b-off" style="height:12%"></div>
+                <div class="b b-off" style="height:8%"></div>
+                <div class="b b-off" style="height:11%"></div>
+                <div class="b b-on" style="height:75%"></div>
+                <div class="b b-on" style="height:80%"></div>
+                <div class="b b-off" style="height:9%"></div>
+                <div class="b b-off" style="height:7%"></div>
+                <div class="b b-off" style="height:13%"></div>
+                <div class="b b-on" style="height:65%"></div>
+                <div class="b b-on" style="height:88%"></div>
+              </div>
+            </div>
+            <div class="wf-row">
+              <span class="wf-lbl">processed</span>
+              <div class="bars">
+                <div class="b b-on" style="height:70%"></div>
+                <div class="b b-on" style="height:90%"></div>
+                <div class="b b-on" style="height:60%"></div>
+                <div class="b b-on" style="height:85%"></div>
+                <div class="b b-cut" style="height:15%"></div>
+                <div class="b b-cut" style="height:10%"></div>
+                <div class="b b-cut" style="height:12%"></div>
+                <div class="b b-cut" style="height:8%"></div>
+                <div class="b b-cut" style="height:11%"></div>
+                <div class="b b-on" style="height:75%"></div>
+                <div class="b b-on" style="height:80%"></div>
+                <div class="b b-cut" style="height:9%"></div>
+                <div class="b b-cut" style="height:7%"></div>
+                <div class="b b-cut" style="height:13%"></div>
+                <div class="b b-on" style="height:65%"></div>
+                <div class="b b-on" style="height:88%"></div>
+              </div>
+            </div>
+            <p class="wf-note" style="color:#3a2020">&#9632; red = silence, gets removed</p>
+          </div>
+          <div class="transcript-wrap">
+            <div class="t-line"><span class="t-ts">00:00</span><span class="t-txt">ok so today we're looking at
+                distributed systems...</span></div>
+            <div class="t-line"><span class="t-ts" style="color:#333">00:38</span><span class="t-txt cut">[silence — 38
+                sec]</span></div>
+            <div class="t-line"><span class="t-ts">01:16</span><span class="t-txt">eventual consistency means
+                that...</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">4</div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">everything gets saved to firestore</div>
+        <div class="step-desc">the transcript, the processed video and metadata are stored so you can access them later
+          from anywhere.</div>
+        <div class="sketch">
+          <div class="sketch-header">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div><span style="margin-left:6px">firestore / lectures / lec_0041</span>
+          </div>
+          <div class="firestore-wrap">
+            <div class="doc-block">
+              <div><span class="k">videoId</span>: <span class="v-s">"lec_2024_0041"</span></div>
+              <div><span class="k">transcript</span>: <span class="v-s">"ok so today we're looking at..."</span></div>
+              <div><span class="k">duration_original</span>: <span class="v-n">3420</span> <span style="color:#444">//
+                  seconds</span></div>
+              <div><span class="k">duration_trimmed</span>: <span class="v-n">2180</span> <span style="color:#444">//
+                  ~36% shorter</span></div>
+              <div><span class="k">timestamp</span>: <span class="v-s">"2024-11-04T14:32:00Z"</span></div>
+              <div><span class="k">userId</span>: <span class="v-s">"uid_abc123"</span></div>
+            </div>
+            <p class="stack-note">// ready to query or analyze later</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <div class="summary-row">
+    <div class="sum-card">
+      <div style="margin-bottom:6px;color:#555"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.5">
+          <polygon points="23 7 16 12 23 17 23 7" />
+          <rect x="1" y="5" width="15" height="14" rx="2" />
+        </svg></div>
+      <div class="sum-name">Video Intelligence</div>
+      <div class="sum-role">transcribes + detects silence</div>
+    </div>
+    <div class="sum-card">
+      <div style="margin-bottom:6px;color:#555"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.5">
+          <ellipse cx="12" cy="5" rx="9" ry="3" />
+          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+        </svg></div>
+      <div class="sum-name">Firestore</div>
+      <div class="sum-role">stores everything for later</div>
+    </div>
+    <div class="sum-card">
+      <div style="margin-bottom:6px;color:#555"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.5">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg></div>
+      <div class="sum-name">reCAPTCHA</div>
+      <div class="sum-role">keeps the bots out</div>
+    </div>
+  </div>
+
+</div>
