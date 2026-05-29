@@ -106,35 +106,9 @@
       color: rgba(232, 237, 245, 0.2);
     }
 
-    /* ─── reCAPTCHA placeholder ─────────────────────────── */
-    .recaptcha-placeholder {
-      width: 100%;
-      border: 1px dashed rgba(255, 255, 255, 0.15);
-      border-radius: 6px;
-      padding: 1rem;
-      text-align: center;
-      color: rgba(232, 237, 245, 0.25);
-      font-size: 12px;
+    .g-recaptcha {
       margin-bottom: 1.25rem;
-      min-height: 78px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
     }
-
-    .recaptcha-placeholder::before {
-      content: '';
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(138, 180, 212, 0.3);
-    }
-
-
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    /* ──────────────────────────────────────────────────────── */
 
     .btn-login {
       width: 100%;
@@ -186,6 +160,8 @@
       text-decoration: underline;
     }
   </style>
+
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -195,8 +171,6 @@
       <span class="l1">Smart Lecture </span><span class="l2">Platform</span>
     </a>
   </nav>
-
-
 
   <div class="card">
     <h2>Welcome back</h2>
@@ -215,7 +189,6 @@
       <label for="password">password</label>
       <input type="password" id="password" name="password" placeholder="••••••••" />
 
-      <!-- reCAPTCHA widget real -->
       <div class="g-recaptcha" data-sitekey="6Lfn0gAtAAAAAAhcs5JxD3K1CBfY4MIo_7P2TnY-"></div>
 
       <p class="error-msg" id="error-msg"></p>
@@ -264,16 +237,12 @@
         return;
       }
 
-      // ── reCAPTCHA check goes here ──────────────────────────
-      // When reCAPTCHA is ready, verify the token before proceeding.
-      // Example:
-      // const recaptchaToken = grecaptcha.getResponse();
-      // if (!recaptchaToken) {
-      //   errorMsg.textContent = "please complete the reCAPTCHA.";
-      //   errorMsg.classList.add("visible");
-      //   return;
-      // }
-      // ───────────────────────────────────────────────────────
+      const recaptchaToken = grecaptcha.getResponse();
+      if (!recaptchaToken) {
+        errorMsg.textContent = "please complete the reCAPTCHA.";
+        errorMsg.classList.add("visible");
+        return;
+      }
 
       btn.disabled = true;
       btn.textContent = "logging in...";
@@ -292,6 +261,7 @@
         errorMsg.classList.add("visible");
         btn.disabled = false;
         btn.textContent = "log in";
+        grecaptcha.reset();
       }
     };
 
