@@ -133,7 +133,7 @@
     }
 
 
-    <head><script src="https://www.google.com/recaptcha/enterprise.js?render=6LdtENwsAAAAAIqaBTNPD322aMFbbpWrAed97_zj"></script>< !-- Your code --></head>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     /* ──────────────────────────────────────────────────────── */
 
     .btn-login {
@@ -209,21 +209,20 @@
 
     <form method="POST" action="/login">
 
-  <label for="email">email</label>
-  <input type="email" id="email" name="username" placeholder="you@email.com" />
+      <label for="email">email</label>
+      <input type="email" id="email" name="username" placeholder="you@email.com" />
 
-  <label for="password">password</label>
-  <input type="password" id="password" name="password" placeholder="••••••••" />
+      <label for="password">password</label>
+      <input type="password" id="password" name="password" placeholder="••••••••" />
 
-  <!-- reCAPTCHA widget real -->
-  <div class="g-recaptcha" data-sitekey="6Lfn0gAtAAAAAAhcs5JxD3K1CBfY4MIo_7P2TnY-"
-       style="margin-bottom: 1.25rem;"></div>
+      <!-- reCAPTCHA widget real -->
+      <div class="g-recaptcha" data-sitekey="6Lfn0gAtAAAAAAhcs5JxD3K1CBfY4MIo_7P2TnY-"></div>
 
-  <p class="error-msg" id="error-msg"></p>
+      <p class="error-msg" id="error-msg"></p>
 
-  <button type="submit" class="btn-login" id="login-btn" onclick="handleLogin()">log in</button>
+      <button type="submit" class="btn-login" id="login-btn" onclick="handleLogin()">log in</button>
 
-</form>
+    </form>
 
     <p class="footer-link">
       don't have an account? <a href="register.html">sign up</a>
