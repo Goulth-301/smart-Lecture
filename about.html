@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About — Smart Lecture Platform</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+            background: #0a0c10;
+            color: #e8edf5;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        /* NAV */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            height: 54px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            background: #0a0c10;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 17px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .logo .l1 {
+            color: #e8edf5;
+        }
+
+        .logo .l2 {
+            color: #8ab4d4;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1.25rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-size: 13px;
+            color: rgba(232, 237, 245, 0.45);
+            text-decoration: none;
+        }
+
+        .nav-link:hover {
+            color: #8ab4d4;
+        }
+
+        .nav-btn {
+            font-size: 13px;
+            padding: 6px 16px;
+            border: 1px solid rgba(138, 180, 212, 0.5);
+            border-radius: 6px;
+            background: transparent;
+            color: #8ab4d4;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            background: rgba(138, 180, 212, 0.08);
+        }
+
+        /* SECTIONS */
+        section {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #8ab4d4;
+            background: rgba(138, 180, 212, 0.08);
+            border: 1px solid rgba(138, 180, 212, 0.2);
+            border-radius: 20px;
+            padding: 4px 14px;
+            margin-bottom: 1.2rem;
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: 500;
+            color: #e8edf5;
+            line-height: 1.25;
+            margin-bottom: 1.2rem;
+        }
+
+        h1 span {
+            color: #8ab4d4;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #e8edf5;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 14px;
+            color: rgba(232, 237, 245, 0.5);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* STATS */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 2.5rem;
+        }
+
+        .stat-card {
+            background: #0e1117;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1.2rem 1rem;
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 26px;
+            font-weight: 500;
+            color: #8ab4d4;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: rgba(232, 237, 245, 0.3);
+            letter-spacing: 0.04em;
+        }
+
+        /* PROBLEM */
+        .problem-block {
+            background: #0e1117;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .problem-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .problem-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            background: rgba(240, 149, 149, 0.08);
+            border: 1px solid rgba(240, 149, 149, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .problem-text {
+            font-size: 13px;
+            color: rgba(232, 237, 245, 0.5);
+            line-height: 1.6;
+            padding-top: 6px;
+        }
+
+        /* MISSION */
+        .mission-quote {
+            border-left: 2px solid #8ab4d4;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            background: rgba(138, 180, 212, 0.04);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .mission-quote p {
+            font-size: 16px;
+            color: rgba(232, 237, 245, 0.75);
+            font-style: italic;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* VALUES */
+        .values-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 1.5rem;
+        }
+
+        .value-card {
+            background: #0e1117;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1.1rem;
+        }
+
+        .value-icon {
+            font-size: 18px;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: #e8edf5;
+            margin-bottom: 0.3rem;
+        }
+
+        .value-desc {
+            font-size: 12px;
+            color: rgba(232, 237, 245, 0.35);
+            line-height: 1.6;
+        }
+
+        /* TEAM */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 1.5rem;
+        }
+
+        .team-card {
+            background: #0e1117;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.2rem 1rem;
+            text-align: center;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(138, 180, 212, 0.3), rgba(138, 180, 212, 0.05));
+            border: 1px solid rgba(138, 180, 212, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin: 0 auto 0.7rem;
+        }
+
+        .team-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: #e8edf5;
+            margin-bottom: 0.2rem;
+        }
+
+        .team-role {
+            font-size: 11px;
+            color: rgba(232, 237, 245, 0.3);
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 4rem 1.5rem 5rem;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-size: 22px;
+            margin-bottom: 0.6rem;
+        }
+
+        .cta-section p {
+            max-width: 380px;
+            margin: 0 auto 1.75rem;
+        }
+
+        .btn-main {
+            background: #8ab4d4;
+            color: #0a0c10;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 11px 28px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .btn-main:hover {
+            background: #9dc3df;
+        }
+
+        .btn-sec {
+            background: transparent;
+            color: rgba(232, 237, 245, 0.5);
+            font-size: 14px;
+            padding: 11px 24px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-sec:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            nav {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a class="logo" href="index.html">
+            <span class="l1">Smart Lecture </span><span class="l2">Platform</span>
+        </a>
+        <div class="nav-right">
+            <a class="nav-link" href="about.html" style="color:#8ab4d4;">about</a>
+            <a class="nav-link" href="how-works.html">how it works</a>
+            <a class="nav-btn" href="login.html">log in</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section>
+        <div class="tag">our story</div>
+        <h1>built by students,<br><span>for students.</span></h1>
+        <p>We got tired of rewatching two-hour lectures just to find one concept. Smart Lecture exists to cut the noise
+            — so you spend less time sitting through theory and more time actually applying what matters.</p>
+        <p>We're a group of university students who believe the real bottleneck in learning isn't effort. It's time.</p>
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-num">2h</div>
+                <div class="stat-label">avg lecture length</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">~18min</div>
+                <div class="stat-label">avg useful content</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">85%</div>
+                <div class="stat-label">time we can give back</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE PROBLEM -->
+    <section>
+        <div class="tag">the problem</div>
+        <h2>why we built this</h2>
+        <p>University lectures are long. Not because the content is deep — but because of everything around it: slow
+            introductions, repeated explanations, silence, digressions. We built Smart Lecture to strip all of that
+            away.</p>
+
+        <div class="problem-block">
+            <div class="problem-item">
+                <div class="problem-icon">⏱</div>
+                <div class="problem-text">Rewatching a 2-hour lecture to find a 3-minute explanation you half-understood
+                    the first time.</div>
+            </div>
+            <div class="problem-item">
+                <div class="problem-icon">📝</div>
+                <div class="problem-text">Taking notes by hand while trying to listen — and ending up with neither a
+                    good transcript nor real understanding.</div>
+            </div>
+            <div class="problem-item">
+                <div class="problem-icon">😴</div>
+                <div class="problem-text">Passive consumption of theory that could've been read in 10 minutes, leaving
+                    no time for actual practice.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MISSION -->
+    <section>
+        <div class="tag">our mission</div>
+        <h2>what drives us</h2>
+        <div class="mission-quote">
+            <p>"Less time absorbing theory. More time applying it. That's the shift we're building toward."</p>
+        </div>
+        <p>We believe students learn better by doing. Our job is to make the theoretical part as efficient as possible —
+            so the time you free up goes straight into projects, labs, problems, and the things that actually stick.</p>
+    </section>
+
+    <!-- VALUES -->
+    <section>
+        <div class="tag">our values</div>
+        <h2>what we stand for</h2>
+
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">⚡</div>
+                <div class="value-title">efficiency first</div>
+                <div class="value-desc">every feature we build should save time, not add complexity.</div>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🎯</div>
+                <div class="value-title">clarity over volume</div>
+                <div class="value-desc">less content, better understood, is always the goal.</div>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🧑‍🎓</div>
+                <div class="value-title">students first</div>
+                <div class="value-desc">we build for real students with real constraints — time, money, deadlines.</div>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🔍</div>
+                <div class="value-title">radical honesty</div>
+                <div class="value-desc">we don't oversell. if something doesn't work well yet, we say so.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM -->
+    <section>
+        <div class="tag">the team</div>
+        <h2>who we are</h2>
+        <p>A small group of students from different backgrounds — engineering, design, and computer science — who
+            decided to solve a problem they faced every single week.</p>
+
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="avatar">👨‍💻</div>
+                <div class="team-name">your name</div>
+                <div class="team-role">dev & founder</div>
+            </div>
+            <div class="team-card">
+                <div class="avatar">👩‍🎨</div>
+                <div class="team-name">teammate</div>
+                <div class="team-role">design</div>
+            </div>
+            <div class="team-card">
+                <div class="avatar">👨‍🔬</div>
+                <div class="team-name">teammate</div>
+                <div class="team-role">backend</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-section">
+        <h2>want to try it yourself?</h2>
+        <p>upload your first lecture and see what you get back in under a minute.</p>
+        <a href="login.html" class="btn-main">get started →</a>
+        <a href="example.html" class="btn-sec">see an example</a>
+    </div>
+
+</body>
+
+</html>
