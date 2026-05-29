@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>See an Example — Smart Lecture Platform</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      background: #0a0c10;
+      color: #e8edf5;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 54px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: sticky;
+      top: 0;
+      background: #0a0c10;
+      z-index: 100;
+    }
+    .logo { font-size: 17px; font-weight: 500; text-decoration: none; }
+    .logo .l1 { color: #e8edf5; }
+    .logo .l2 { color: #8ab4d4; }
+    .nav-right { display: flex; gap: 1.25rem; align-items: center; }
+    .nav-link { font-size: 13px; color: rgba(232,237,245,0.45); text-decoration: none; }
+    .nav-link:hover { color: #8ab4d4; }
+    .nav-btn {
+      font-size: 13px; padding: 6px 16px;
+      border: 1px solid rgba(138,180,212,0.5);
+      border-radius: 6px; background: transparent;
+      color: #8ab4d4; cursor: pointer; text-decoration: none;
+    }
+    .nav-btn:hover { background: rgba(138,180,212,0.08); }
+
+    /* HERO */
+    .page-hero {
+      text-align: center;
+      padding: 3.5rem 1.5rem 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .page-hero .tag {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #8ab4d4;
+      background: rgba(138,180,212,0.08);
+      border: 1px solid rgba(138,180,212,0.2);
+      border-radius: 20px;
+      padding: 4px 14px;
+      margin-bottom: 1.2rem;
+    }
+    .page-hero h1 {
+      font-size: 30px;
+      font-weight: 500;
+      color: #e8edf5;
+      margin-bottom: 0.6rem;
+      line-height: 1.2;
+    }
+    .page-hero h1 span { color: #8ab4d4; }
+    .page-hero p {
+      font-size: 14px;
+      color: rgba(232,237,245,0.4);
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* DEMO WRAPPER */
+    .demo-wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    /* STEP */
+    .step {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.5s forwards;
+    }
+    .step:nth-child(1) { animation-delay: 0.1s; }
+    .step:nth-child(2) { animation-delay: 0.25s; }
+    .step:nth-child(3) { animation-delay: 0.4s; }
+    .step:nth-child(4) { animation-delay: 0.55s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .step-num {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(138,180,212,0.5);
+      color: #8ab4d4;
+      font-size: 13px;
+      font-weight: 500;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      background: rgba(138,180,212,0.05);
+    }
+    .step-line {
+      width: 1px;
+      flex: 1;
+      min-height: 30px;
+      background: linear-gradient(to bottom, rgba(138,180,212,0.2), transparent);
+      margin-top: 8px;
+    }
+
+    .step-content { flex: 1; }
+    .step-label {
+      font-size: 11px;
+      color: #8ab4d4;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .step-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #e8edf5;
+      margin-bottom: 0.4rem;
+    }
+    .step-desc {
+      font-size: 13px;
+      color: rgba(232,237,245,0.4);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    /* MOCK CARDS */
+    .mock {
+      background: #0e1117;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .mock-bar {
+      background: #13161e;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #febc2e; }
+    .dot-g { background: #28c840; }
+    .mock-title { font-size: 11px; color: rgba(232,237,245,0.25); margin-left: 4px; }
+    .mock-body { padding: 1rem 1.2rem; }
+
+    /* UPLOAD MOCK */
+    .upload-mock-url {
+      display: flex; gap: 8px; margin-bottom: 10px;
+    }
+    .upload-mock-url .fake-input {
+      flex: 1;
+      background: #0a0c10;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 5px;
+      padding: 7px 10px;
+      font-size: 12px;
+      color: #8ab4d4;
+      font-family: monospace;
+    }
+    .upload-mock-url .fake-btn {
+      background: #8ab4d4;
+      color: #0a0c10;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 7px 14px;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+    .fake-divider {
+      text-align: center;
+      font-size: 11px;
+      color: rgba(232,237,245,0.2);
+      margin: 8px 0;
+      position: relative;
+    }
+    .fake-divider::before, .fake-divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 42%;
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+    }
+    .fake-divider::before { left: 0; }
+    .fake-divider::after { right: 0; }
+    .fake-drop {
+      border: 1px dashed rgba(255,255,255,0.12);
+      border-radius: 6px;
+      padding: 14px;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(232,237,245,0.2);
+    }
+
+    /* PROCESSING MOCK */
+    .processing-mock {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .proc-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: rgba(232,237,245,0.5);
+    }
+    .proc-icon {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .proc-icon.done { background: rgba(40,200,64,0.1); }
+    .proc-icon.active { background: rgba(138,180,212,0.1); }
+    .proc-icon.pending { background: rgba(255,255,255,0.04); }
+    .proc-bar-wrap {
+      flex: 1;
+      height: 4px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .proc-bar {
+      height: 100%;
+      border-radius: 2px;
+      background: #8ab4d4;
+    }
+    .proc-bar.done { width: 100%; background: #28c840; }
+    .proc-bar.active {
+      width: 60%;
+      background: #8ab4d4;
+      animation: pulse-bar 1.5s ease-in-out infinite;
+    }
+    .proc-bar.pending { width: 0%; }
+    @keyframes pulse-bar {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* TRANSCRIPT MOCK */
+    .transcript-mock { display: flex; flex-direction: column; gap: 8px; }
+    .t-line {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .t-time {
+      font-size: 10px;
+      color: rgba(138,180,212,0.6);
+      font-family: monospace;
+      padding-top: 2px;
+      flex-shrink: 0;
+      width: 44px;
+    }
+    .t-text {
+      font-size: 12px;
+      color: rgba(232,237,245,0.6);
+      line-height: 1.6;
+    }
+    .t-text.highlight {
+      color: #e8edf5;
+      background: rgba(138,180,212,0.07);
+      border-radius: 3px;
+      padding: 1px 5px;
+    }
+    .t-separator {
+      height: 1px;
+      background: rgba(255,255,255,0.05);
+      margin: 2px 0;
+    }
+
+    /* SUMMARY MOCK */
+    .summary-mock { display: flex; flex-direction: column; gap: 10px; }
+    .summary-chip {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(138,180,212,0.08);
+      border: 1px solid rgba(138,180,212,0.15);
+      color: #8ab4d4;
+      margin-right: 6px;
+      margin-bottom: 4px;
+    }
+    .summary-block {
+      background: rgba(255,255,255,0.03);
+      border-left: 2px solid rgba(138,180,212,0.3);
+      border-radius: 0 5px 5px 0;
+      padding: 8px 12px;
+    }
+    .summary-block .s-label {
+      font-size: 10px;
+      color: #8ab4d4;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .summary-block .s-text {
+      font-size: 12px;
+      color: rgba(232,237,245,0.55);
+      line-height: 1.6;
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 0 1.5rem 5rem;
+    }
+    .cta-section h2 {
+      font-size: 22px;
+      font-weight: 500;
+      color: #e8edf5;
+      margin-bottom: 0.5rem;
+    }
+    .cta-section p {
+      font-size: 14px;
+      color: rgba(232,237,245,0.4);
+      margin-bottom: 1.5rem;
+    }
+    .btn-main {
+      background: #8ab4d4;
+      color: #0a0c10;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 11px 28px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-main:hover { background: #9dc3df; }
+
+    @media (max-width: 500px) {
+      .page-hero h1 { font-size: 22px; }
+      .step { gap: 1rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a class="logo" href="index.html">
+      <span class="l1">Smart Lecture </span><span class="l2">Platform</span>
+    </a>
+    <div class="nav-right">
+      <a class="nav-link" href="index.html">home</a>
+      <a class="nav-link" href="how-works.html">how it works</a>
+      <a class="nav-btn" href="login.html">log in</a>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="tag">live example</div>
+    <h1>watch a lecture become <span>something useful</span></h1>
+    <p>here's exactly what happens from the moment you upload to the moment you study.</p>
+  </section>
+
+  <div class="demo-wrapper">
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">01</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-label">input</div>
+        <div class="step-title">upload your lecture</div>
+        <div class="step-desc">paste a video URL or drop a file — we support YouTube links, MP4, and most common formats.</div>
+        <div class="mock">
+          <div class="mock-bar">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+            <span class="mock-title">smart-lecture / upload</span>
+          </div>
+          <div class="mock-body">
+            <div class="upload-mock-url">
+              <div class="fake-input">https://youtube.com/watch?v=dQw4w9WgXcQ</div>
+              <div class="fake-btn">process</div>
+            </div>
+            <div class="fake-divider">or</div>
+            <div class="fake-drop">📁 drag your video here</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">02</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-label">processing</div>
+        <div class="step-title">ai gets to work</div>
+        <div class="step-desc">we transcribe the audio, remove silence and filler words, and detect topic changes automatically.</div>
+        <div class="mock">
+          <div class="mock-bar">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+            <span class="mock-title">processing · lecture_04.mp4</span>
+          </div>
+          <div class="mock-body">
+            <div class="processing-mock">
+              <div class="proc-row">
+                <div class="proc-icon done">✓</div>
+                <span>audio extracted</span>
+                <div class="proc-bar-wrap"><div class="proc-bar done"></div></div>
+              </div>
+              <div class="proc-row">
+                <div class="proc-icon done">✓</div>
+                <span>silence removed</span>
+                <div class="proc-bar-wrap"><div class="proc-bar done"></div></div>
+              </div>
+              <div class="proc-row">
+                <div class="proc-icon active">⟳</div>
+                <span>transcribing speech…</span>
+                <div class="proc-bar-wrap"><div class="proc-bar active"></div></div>
+              </div>
+              <div class="proc-row">
+                <div class="proc-icon pending">○</div>
+                <span style="color:rgba(232,237,245,0.2)">generating summary</span>
+                <div class="proc-bar-wrap"><div class="proc-bar pending"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">03</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-label">output</div>
+        <div class="step-title">clean, timestamped transcript</div>
+        <div class="step-desc">every word, timestamped and cleaned up. no filler, no repeated sentences. exactly what was said.</div>
+        <div class="mock">
+          <div class="mock-bar">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+            <span class="mock-title">transcript · lecture_04</span>
+          </div>
+          <div class="mock-body">
+            <div class="transcript-mock">
+              <div class="t-line">
+                <div class="t-time">00:12</div>
+                <div class="t-text">Today we're going to cover the fundamentals of neural networks.</div>
+              </div>
+              <div class="t-separator"></div>
+              <div class="t-line">
+                <div class="t-time">01:04</div>
+                <div class="t-text highlight">The key idea is that a perceptron mimics a biological neuron by taking weighted inputs and producing a single output.</div>
+              </div>
+              <div class="t-separator"></div>
+              <div class="t-line">
+                <div class="t-time">02:31</div>
+                <div class="t-text">Backpropagation allows the network to adjust weights based on the error at the output layer.</div>
+              </div>
+              <div class="t-separator"></div>
+              <div class="t-line">
+                <div class="t-time">04:18</div>
+                <div class="t-text">This is why deep networks can approximate almost any function, given enough data.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">04</div>
+      </div>
+      <div class="step-content">
+        <div class="step-label">study</div>
+        <div class="step-title">key points & summary</div>
+        <div class="step-desc">on top of the transcript, we generate a summary and pull the most important concepts so you can review fast.</div>
+        <div class="mock">
+          <div class="mock-bar">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+            <span class="mock-title">summary · lecture_04</span>
+          </div>
+          <div class="mock-body">
+            <div class="summary-mock">
+              <div>
+                <span class="summary-chip">neural networks</span>
+                <span class="summary-chip">backpropagation</span>
+                <span class="summary-chip">perceptron</span>
+                <span class="summary-chip">deep learning</span>
+              </div>
+              <div class="summary-block">
+                <div class="s-label">tldr</div>
+                <div class="s-text">Lecture covers the basics of neural networks — how perceptrons work, what backpropagation does, and why deep networks are powerful function approximators.</div>
+              </div>
+              <div class="summary-block">
+                <div class="s-label">key concept</div>
+                <div class="s-text">A perceptron takes weighted inputs and fires based on a threshold — the building block of all neural networks.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <section class="cta-section">
+    <h2>ready to try it on your own lecture?</h2>
+    <p>it takes less than a minute to get your first transcript.</p>
+    <a href="login.html" class="btn-main">get started →</a>
+  </section>
+
+</body>
+</html>
