@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Log in — Smart Lecture Platform</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    html, body {
+    html,
+    body {
       min-height: 100%;
       background: #0a0c10;
       color: #e8edf5;
@@ -20,23 +26,36 @@
 
     nav {
       position: absolute;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 2rem;
       height: 54px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-    .logo { font-size: 17px; font-weight: 500; text-decoration: none; }
-    .logo .l1 { color: #e8edf5; }
-    .logo .l2 { color: #8ab4d4; }
+
+    .logo {
+      font-size: 17px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .logo .l1 {
+      color: #e8edf5;
+    }
+
+    .logo .l2 {
+      color: #8ab4d4;
+    }
 
     .card {
       width: 100%;
       max-width: 400px;
       background: #0e1117;
-      border: 1px solid rgba(255,255,255,0.14);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 12px;
       padding: 2.5rem 2rem;
       margin: 0 1rem;
@@ -48,16 +67,17 @@
       color: #e8edf5;
       margin-bottom: 0.4rem;
     }
+
     .card .subtitle {
       font-size: 13px;
-      color: rgba(232,237,245,0.4);
+      color: rgba(232, 237, 245, 0.4);
       margin-bottom: 2rem;
     }
 
     label {
       display: block;
       font-size: 12px;
-      color: rgba(232,237,245,0.5);
+      color: rgba(232, 237, 245, 0.5);
       margin-bottom: 0.4rem;
       letter-spacing: 0.04em;
     }
@@ -66,7 +86,7 @@
     input[type="password"] {
       width: 100%;
       background: #0a0c10;
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 6px;
       color: #e8edf5;
       font-size: 14px;
@@ -76,20 +96,24 @@
       margin-bottom: 1.25rem;
       transition: border-color 0.2s;
     }
+
     input[type="email"]:focus,
     input[type="password"]:focus {
-      border-color: rgba(138,180,212,0.5);
+      border-color: rgba(138, 180, 212, 0.5);
     }
-    input::placeholder { color: rgba(232,237,245,0.2); }
+
+    input::placeholder {
+      color: rgba(232, 237, 245, 0.2);
+    }
 
     /* ─── reCAPTCHA placeholder ─────────────────────────── */
     .recaptcha-placeholder {
       width: 100%;
-      border: 1px dashed rgba(255,255,255,0.15);
+      border: 1px dashed rgba(255, 255, 255, 0.15);
       border-radius: 6px;
       padding: 1rem;
       text-align: center;
-      color: rgba(232,237,245,0.25);
+      color: rgba(232, 237, 245, 0.25);
       font-size: 12px;
       margin-bottom: 1.25rem;
       min-height: 78px;
@@ -98,20 +122,18 @@
       justify-content: center;
       gap: 8px;
     }
+
     .recaptcha-placeholder::before {
       content: '';
       display: inline-block;
-      width: 10px; height: 10px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: rgba(138,180,212,0.3);
+      background: rgba(138, 180, 212, 0.3);
     }
 
 
-<head>
-  <script src="https://www.google.com/recaptcha/enterprise.js?render=6LdtENwsAAAAAIqaBTNPD322aMFbbpWrAed97_zj"></script>
-  <!-- Your code -->
-</head>
-
+    <head><script src="https://www.google.com/recaptcha/enterprise.js?render=6LdtENwsAAAAAIqaBTNPD322aMFbbpWrAed97_zj"></script>< !-- Your code --></head>
     /* ──────────────────────────────────────────────────────── */
 
     .btn-login {
@@ -128,7 +150,11 @@
       transition: background 0.2s;
       margin-bottom: 1rem;
     }
-    .btn-login:hover { background: #9dc3df; }
+
+    .btn-login:hover {
+      background: #9dc3df;
+    }
+
     .btn-login:disabled {
       opacity: 0.5;
       cursor: not-allowed;
@@ -140,20 +166,28 @@
       margin-bottom: 1rem;
       display: none;
     }
-    .error-msg.visible { display: block; }
+
+    .error-msg.visible {
+      display: block;
+    }
 
     .footer-link {
       text-align: center;
       font-size: 13px;
-      color: rgba(232,237,245,0.35);
+      color: rgba(232, 237, 245, 0.35);
     }
+
     .footer-link a {
       color: #8ab4d4;
       text-decoration: none;
     }
-    .footer-link a:hover { text-decoration: underline; }
+
+    .footer-link a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
+
 <body>
 
   <nav>
@@ -173,20 +207,23 @@
       ← back to home
     </a>
 
-    <label for="email">email</label>
-    <input type="email" id="email" placeholder="you@email.com" />
+    <form method="POST" action="/login">
 
-    <label for="password">password</label>
-    <input type="password" id="password" placeholder="••••••••" />
+  <label for="email">email</label>
+  <input type="email" id="email" name="username" placeholder="you@email.com" />
 
-    <!-- reCAPTCHA goes here — add widget when ready -->
-    <div class="recaptcha-placeholder" id="recaptcha-container">
-      reCAPTCHA will appear here
-    </div>
+  <label for="password">password</label>
+  <input type="password" id="password" name="password" placeholder="••••••••" />
 
-    <p class="error-msg" id="error-msg"></p>
+  <!-- reCAPTCHA widget real -->
+  <div class="g-recaptcha" data-sitekey="6Lfn0gAtAAAAAAhcs5JxD3K1CBfY4MIo_7P2TnY-"
+       style="margin-bottom: 1.25rem;"></div>
 
-    <button class="btn-login" id="login-btn" onclick="handleLogin()">log in</button>
+  <p class="error-msg" id="error-msg"></p>
+
+  <button type="submit" class="btn-login" id="login-btn" onclick="handleLogin()">log in</button>
+
+</form>
 
     <p class="footer-link">
       don't have an account? <a href="register.html">sign up</a>
@@ -265,4 +302,5 @@
   </script>
 
 </body>
+
 </html>
