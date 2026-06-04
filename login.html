@@ -249,7 +249,7 @@
 
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "dashboard.html";
+        window.location.href = "index.html";
       } catch (err) {
         let msg = "something went wrong. try again.";
         if (err.code === "auth/user-not-found" || err.code === "auth/wrong-password" || err.code === "auth/invalid-credential") {
