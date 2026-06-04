@@ -35,69 +35,30 @@
     .upload-inner h3 { font-size: 16px; font-weight: 500; color: #e8edf5; margin-bottom: 0.3rem; }
     .upload-inner > p { font-size: 13px; color: rgba(232,237,245,0.4); margin-bottom: 1rem; }
 
-    .divider { display: flex; align-items: center; gap: 8px; margin: 1rem 0; font-size: 12px; color: rgba(232,237,245,0.25); }
-    .divider::before, .divider::after { content: ''; flex: 1; border-top: 1px solid rgba(255,255,255,0.08); }
+    .dropzone {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 140px;
+      position: relative;
+      border: 1px dashed rgba(255,255,255,0.12);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.01);
+      text-align: center;
+      cursor: pointer;
+      transition: all .25s ease;
+    }
+    .dropzone:hover { border-color: rgba(138,180,212,0.5); background: rgba(138,180,212,0.03); }
+    .dropzone.drag-over { border-color: #8ab4d4; background: rgba(138,180,212,0.08); }
 
-    .dropzone-wrap { display: block; width: 100%; }
-    
-  .dropzone {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 140px;
-  position: relative;
+    .dropzone-content { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .dropzone-icon { width: 42px; height: 42px; opacity: .9; }
+    .dropzone-title { color: rgba(232,237,245,.7); font-size: 15px; }
+    .dropzone-subtitle { color: rgba(232,237,245,.35); font-size: 12px; }
 
-  border: 1px dashed rgba(255,255,255,0.12);
-  border-radius: 10px;
+    #selectedFile { text-align: center; margin-top: 12px; color: #8ab4d4; font-size: 13px; }
 
-  background: rgba(255,255,255,0.01);
-
-  text-align: center;
-  cursor: pointer;
-
-  transition: all .25s ease;
-}
-
-.dropzone:hover {
-  border-color: rgba(138,180,212,0.5);
-  background: rgba(138,180,212,0.03);
-}
-
-.dropzone.drag-over {
-  border-color: #8ab4d4;
-  background: rgba(138,180,212,0.08);
-}
-
-.dropzone-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.dropzone-icon {
-  width: 42px;
-  height: 42px;
-  opacity: .9;
-}
-
-.dropzone-title {
-  color: rgba(232,237,245,.7);
-  font-size: 15px;
-}
-
-.dropzone-subtitle {
-  color: rgba(232,237,245,.35);
-  font-size: 12px;
-}
-
-#selectedFile {
-  text-align: center;
-  margin-top: 12px;
-  color: #8ab4d4;
-  font-size: 13px;
-}
     #uploadBtn {
       display: block;
       width: 100%;
@@ -163,122 +124,39 @@
     </div>
   </section>
 
- <section class="upload">
-  <div class="upload-inner">
+  <section class="upload">
+    <div class="upload-inner">
+      <h3>upload your lecture</h3>
+      <p>drop an mp3, wav, mp4 or lecture recording</p>
 
-    <h3>upload your lecture</h3>
-
-    <p>
-      drop an mp3, wav, mp4 or lecture recording
-    </p>
-
-    <label for="audioFile"
-           class="dropzone"
-           id="dropzone">
-
-      <div class="dropzone-content">
-
-        <svg class="dropzone-icon"
-             viewBox="0 0 24 24"
-             fill="none">
-
-          <path
-            d="M12 15V7"
-            stroke="#8ab4d4"
-            stroke-width="1.8"
-            stroke-linecap="round"
-          />
-
-          <path
-            d="M8.5 10.5L12 7L15.5 10.5"
-            stroke="#8ab4d4"
-            stroke-width="1.8"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-
-          <rect
-            x="3"
-            y="3"
-            width="18"
-            height="18"
-            rx="4"
-            stroke="rgba(255,255,255,.25)"
-          />
-        </svg>
-
-        <div class="dropzone-title">
-          Click or drag your file here
+      <label for="audioFile" class="dropzone" id="dropzone">
+        <div class="dropzone-content">
+          <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none">
+            <path d="M12 15V7" stroke="#8ab4d4" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M8.5 10.5L12 7L15.5 10.5" stroke="#8ab4d4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="3" y="3" width="18" height="18" rx="4" stroke="rgba(255,255,255,.25)"/>
+          </svg>
+          <div class="dropzone-title">Click or drag your file here</div>
+          <div class="dropzone-subtitle">Supports MP3, WAV, MP4, M4A</div>
         </div>
+        <input
+          type="file"
+          id="audioFile"
+          accept="audio/*,video/*,.mp3,.mp4,.wav,.m4a,.ogg,.webm"
+          style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;"
+        />
+      </label>
 
-        <div class="dropzone-subtitle">
-          Supports MP3, WAV, MP4, M4A
-        </div>
-
-      </div>
-
-      <input
-        type="file"
-        id="audioFile"
-        accept="audio/*,video/*,.mp3,.mp4,.wav,.m4a,.ogg,.webm"
-        style="
-          position:absolute;
-          inset:0;
-          width:100%;
-          height:100%;
-          opacity:0;
-          cursor:pointer;
-        "
-      />
-
-    </label>
-
-    <p id="selectedFile"></p>
-
-    <div style="
-      text-align:center;
-      margin-top:20px;
-      color:rgba(232,237,245,.45);
-      font-size:14px;
-      line-height:1.6;
-    ">
-      Click below to upload your file
-      and start transcribing.
-    </div>
-
-    <button id="uploadBtn" disabled>
-      Upload &amp; Transcribe
-    </button>
-
-    <p id="statusMsg" class="info"></p>
-
-    <div id="transcriptBox">
-      <h4>Transcript</h4>
-
-      <div id="transcriptText"></div>
-
-      <button id="downloadBtn">
-        Download PDF
-      </button>
-    </div>
-
-  </div>
-</section>
-
-      <div class="dropzone-wrap">
-        <label for="audioFile" class="dropzone" id="dropzone">
-          Click or drag your audio file here
-          <input type="file" id="audioFile" accept="audio/*,video/*,.mp3,.mp4,.wav,.m4a,.ogg,.webm" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;" />
-        </label>
-      </div>
       <p id="selectedFile"></p>
+
       <button id="uploadBtn" disabled>Upload &amp; Transcribe</button>
+
       <p id="statusMsg" class="info"></p>
 
       <div id="transcriptBox">
-        <h4>transcript</h4>
+        <h4>Transcript</h4>
         <div id="transcriptText"></div>
-        <button id="downloadBtn">Download .pdf</button>
+        <button id="downloadBtn">Download PDF</button>
       </div>
     </div>
   </section>
@@ -312,14 +190,14 @@
     const app     = initializeApp(firebaseConfig);
     const storage = getStorage(app);
 
-    const dropzone      = document.getElementById("dropzone");
-    const fileInput     = document.getElementById("audioFile");
-    const selectedFile  = document.getElementById("selectedFile");
-    const uploadBtn     = document.getElementById("uploadBtn");
-    const statusMsg     = document.getElementById("statusMsg");
-    const transcriptBox = document.getElementById("transcriptBox");
-    const transcriptText= document.getElementById("transcriptText");
-    const downloadBtn   = document.getElementById("downloadBtn");
+    const dropzone       = document.getElementById("dropzone");
+    const fileInput      = document.getElementById("audioFile");
+    const selectedFile   = document.getElementById("selectedFile");
+    const uploadBtn      = document.getElementById("uploadBtn");
+    const statusMsg      = document.getElementById("statusMsg");
+    const transcriptBox  = document.getElementById("transcriptBox");
+    const transcriptText = document.getElementById("transcriptText");
+    const downloadBtn    = document.getElementById("downloadBtn");
 
     function setStatus(text, type = "info") {
       statusMsg.textContent = text;
@@ -349,10 +227,7 @@
         const lines = doc.splitTextToSize(text, maxWidth);
         let y = margin;
         lines.forEach(line => {
-          if (y + lineHeight > pageHeight - margin) {
-            doc.addPage();
-            y = margin;
-          }
+          if (y + lineHeight > pageHeight - margin) { doc.addPage(); y = margin; }
           doc.text(line, margin, y);
           y += lineHeight;
         });
@@ -366,10 +241,7 @@
 
       const submitRes = await fetch("https://api.assemblyai.com/v2/transcript", {
         method: "POST",
-        headers: {
-          "authorization": ASSEMBLYAI_KEY,
-          "content-type": "application/json"
-        },
+        headers: { "authorization": ASSEMBLYAI_KEY, "content-type": "application/json" },
         body: JSON.stringify({ audio_url: audioUrl, language_detection: true })
       });
 
@@ -381,7 +253,6 @@
       const { id } = await submitRes.json();
       localStorage.setItem("assemblyai_job", JSON.stringify({ id, filename }));
       setStatus("Transcribing… a 1-hour lecture takes ~5 min.", "info");
-
       pollTranscript(id, filename);
     }
 
@@ -399,13 +270,11 @@
             setStatus("Transcription complete!", "success");
             showTranscript(data.text, filename);
             uploadBtn.disabled = false;
-
           } else if (data.status === "error") {
             clearInterval(interval);
             localStorage.removeItem("assemblyai_job");
             setStatus("Transcription error: " + data.error, "error");
             uploadBtn.disabled = false;
-
           } else {
             const pct = data.audio_duration
               ? Math.round((data.audio_start_from || 0) / data.audio_duration * 100)
@@ -418,6 +287,7 @@
       }, 5000);
     }
 
+    // Resume any in-progress job on page load
     const savedJob = localStorage.getItem("assemblyai_job");
     if (savedJob) {
       try {
@@ -442,6 +312,7 @@
         setFile(file);
       }
     });
+
     fileInput.addEventListener("change", () => {
       if (fileInput.files.length > 0) setFile(fileInput.files[0]);
     });
