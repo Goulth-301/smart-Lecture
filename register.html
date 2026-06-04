@@ -245,11 +245,11 @@
           createdAt: serverTimestamp()
         });
 
-        successMsg.textContent = "account created! redirecting...";
+        successMsg.textContent = "account created! redirecting to login...";
         successMsg.classList.add("visible");
 
         setTimeout(() => {
-          window.location.href = "dashboard.html";
+          window.location.href = "login.html";
         }, 1500);
 
       } catch (err) {
