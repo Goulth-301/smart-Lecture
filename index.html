@@ -1,19 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Smart Lecture Platform</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html,
-    body {
+    html, body {
       min-height: 100%;
       background: #0a0c10;
       color: #e8edf5;
@@ -27,358 +21,351 @@
       justify-content: space-between;
       padding: 0 2rem;
       height: 54px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-
-    .logo {
-      font-size: 17px;
-      font-weight: 500;
-    }
-
-    .logo .l1 {
-      color: #e8edf5;
-    }
-
-    .logo .l2 {
-      color: #8ab4d4;
-    }
-
-    .nav-right {
-      display: flex;
-      gap: 1.25rem;
-      align-items: center;
-    }
-
-    .nav-link {
-      font-size: 13px;
-      color: rgba(232, 237, 245, 0.45);
-      text-decoration: none;
-    }
-
-    .nav-link:hover {
-      color: #8ab4d4;
-    }
-
+    .logo { font-size: 17px; font-weight: 500; }
+    .logo .l1 { color: #e8edf5; }
+    .logo .l2 { color: #8ab4d4; }
+    .nav-right { display: flex; gap: 1.25rem; align-items: center; }
+    .nav-link { font-size: 13px; color: rgba(232,237,245,0.45); text-decoration: none; }
+    .nav-link:hover { color: #8ab4d4; }
     .nav-btn {
-      font-size: 13px;
-      padding: 6px 16px;
-      border: 1px solid rgba(138, 180, 212, 0.5);
-      border-radius: 6px;
-      background: transparent;
-      color: #8ab4d4;
-      cursor: pointer;
-      text-decoration: none;
+      font-size: 13px; padding: 6px 16px;
+      border: 1px solid rgba(138,180,212,0.5);
+      border-radius: 6px; background: transparent;
+      color: #8ab4d4; cursor: pointer; text-decoration: none;
     }
+    .nav-btn:hover { background: rgba(138,180,212,0.08); }
 
-    .nav-btn:hover {
-      background: rgba(138, 180, 212, 0.08);
+    /* USER NAV (shown when logged in) */
+    .nav-user {
+      display: none;
+      align-items: center;
+      gap: 1rem;
     }
+    .nav-user-name {
+      font-size: 13px;
+      color: rgba(232,237,245,0.6);
+    }
+    .nav-user-name span { color: #8ab4d4; }
+    .btn-logout {
+      font-size: 12px;
+      color: rgba(232,237,245,0.35);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      padding: 0;
+    }
+    .btn-logout:hover { color: #e8edf5; }
 
     /* HERO */
     .hero {
       padding: 5rem 1.5rem 3.5rem;
       text-align: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-
-    .hero-brand {
-      font-size: 24px;
-      font-weight: 500;
-      margin-bottom: 1.75rem;
-    }
-
-    .hero-brand .l1 {
-      color: #e8edf5;
-    }
-
-    .hero-brand .l2 {
-      color: #8ab4d4;
-    }
-
-    .hero h1 {
-      font-size: 36px;
-      font-weight: 500;
-      line-height: 1.2;
-      color: #e8edf5;
-      margin-bottom: 1rem;
-    }
-
-    .hero h1 span {
-      color: #8ab4d4;
-    }
-
-    .hero p {
-      font-size: 15px;
-      color: rgba(232, 237, 245, 0.45);
-      max-width: 420px;
-      margin: 0 auto 2.25rem;
-      line-height: 1.7;
-    }
-
-    .hero-btns {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
+    .hero-brand { font-size: 24px; font-weight: 500; margin-bottom: 1.75rem; }
+    .hero-brand .l1 { color: #e8edf5; }
+    .hero-brand .l2 { color: #8ab4d4; }
+    .hero h1 { font-size: 36px; font-weight: 500; line-height: 1.2; color: #e8edf5; margin-bottom: 1rem; }
+    .hero h1 span { color: #8ab4d4; }
+    .hero p { font-size: 15px; color: rgba(232,237,245,0.45); max-width: 420px; margin: 0 auto 2.25rem; line-height: 1.7; }
+    .hero-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
     .btn-main {
-      background: #8ab4d4;
-      color: #0a0c10;
-      font-size: 14px;
-      font-weight: 500;
-      padding: 10px 24px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
+      background: #8ab4d4; color: #0a0c10;
+      font-size: 14px; font-weight: 500;
+      padding: 10px 24px; border-radius: 6px;
+      border: none; cursor: pointer; text-decoration: none;
     }
-
-    .btn-main:hover {
-      background: #9dc3df;
-    }
-
+    .btn-main:hover { background: #9dc3df; }
     .btn-sec {
-      background: transparent;
-      color: rgba(232, 237, 245, 0.6);
-      font-size: 14px;
-      padding: 10px 24px;
-      border-radius: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
+      background: transparent; color: rgba(232,237,245,0.6);
+      font-size: 14px; padding: 10px 24px;
+      border-radius: 6px; border: 1px solid rgba(255,255,255,0.12);
+      cursor: pointer; text-decoration: none; display: inline-block;
     }
-
-    .btn-sec:hover {
-      background: rgba(255, 255, 255, 0.04);
-    }
+    .btn-sec:hover { background: rgba(255,255,255,0.04); }
 
     /* UPLOAD */
-    .upload {
-      padding: 3rem 1.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
+    .upload { padding: 3rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
     .upload-inner {
-      max-width: 520px;
-      margin: 0 auto;
+      max-width: 520px; margin: 0 auto;
       background: #0e1117;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 10px;
-      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 10px; padding: 2rem;
     }
+    .upload-inner h3 { font-size: 16px; font-weight: 500; color: #e8edf5; margin-bottom: 0.3rem; }
+    .upload-inner p { font-size: 13px; color: rgba(232,237,245,0.4); margin-bottom: 1rem; }
+    .url-row { display: flex; gap: 8px; margin-top: 1rem; }
+    .url-row input {
+      flex: 1; background: #0a0c10;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px; color: #e8edf5;
+      font-size: 13px; padding: 9px 12px;
+      outline: none; font-family: inherit;
+    }
+    .url-row input::placeholder { color: rgba(232,237,245,0.2); }
+    .url-row input:focus { border-color: rgba(138,180,212,0.4); }
+    .url-row button {
+      background: #8ab4d4; color: #0a0c10;
+      font-size: 13px; font-weight: 500;
+      padding: 9px 18px; border-radius: 6px;
+      border: none; cursor: pointer;
+      white-space: nowrap; font-family: inherit;
+    }
+    .url-row button:hover { background: #9dc3df; }
+    .divider {
+      display: flex; align-items: center;
+      gap: 8px; margin: 1rem 0;
+      font-size: 12px; color: rgba(232,237,245,0.25);
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .dropzone {
+      border: 1px dashed rgba(255,255,255,0.15);
+      border-radius: 8px; padding: 1.75rem;
+      text-align: center; color: rgba(232,237,245,0.25);
+      font-size: 13px; cursor: pointer; transition: border-color 0.2s;
+    }
+    .dropzone:hover { border-color: rgba(138,180,212,0.3); color: rgba(232,237,245,0.4); }
 
-    .upload-inner h3 {
-      font-size: 16px;
+    /* STEPS */
+    .steps { padding: 3rem 1.5rem 4rem; }
+    .steps-label {
+      font-size: 11px; color: rgba(232,237,245,0.3);
+      margin-bottom: 1.5rem; text-align: center;
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .steps-row {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 12px; max-width: 580px; margin: 0 auto;
+    }
+    .step-card {
+      background: #0e1117;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px; padding: 1.1rem;
+    }
+    .step-n { font-size: 11px; color: #8ab4d4; margin-bottom: 0.6rem; }
+    .step-card h4 { font-size: 13px; font-weight: 500; color: #e8edf5; margin-bottom: 0.35rem; }
+    .step-card p { font-size: 12px; color: rgba(232,237,245,0.35); line-height: 1.6; }
+
+    /* ===================== */
+    /* DASHBOARD (logged in) */
+    /* ===================== */
+    #dashboard { display: none; }
+
+    .dash-header {
+      padding: 2.5rem 2rem 0;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .dash-header h2 {
+      font-size: 22px;
       font-weight: 500;
       color: #e8edf5;
       margin-bottom: 0.3rem;
     }
-
-    .upload-inner p {
+    .dash-header h2 span { color: #8ab4d4; }
+    .dash-header p {
       font-size: 13px;
-      color: rgba(232, 237, 245, 0.4);
+      color: rgba(232,237,245,0.4);
+    }
+
+    .dash-body {
+      max-width: 780px;
+      margin: 2rem auto;
+      padding: 0 2rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* New upload card */
+    .new-upload-card {
+      background: #0e1117;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 10px;
+      padding: 1.75rem;
+    }
+    .new-upload-card h3 {
+      font-size: 15px;
+      font-weight: 500;
+      color: #e8edf5;
+      margin-bottom: 0.3rem;
+    }
+    .new-upload-card p {
+      font-size: 13px;
+      color: rgba(232,237,245,0.4);
       margin-bottom: 1rem;
     }
 
-    .url-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 1rem;
-    }
-
-    .url-row input {
-      flex: 1;
-      background: #0a0c10;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 6px;
-      color: #e8edf5;
+    /* Transcripts section */
+    .transcripts-section h3 {
       font-size: 13px;
-      padding: 9px 12px;
-      outline: none;
-      font-family: inherit;
+      color: rgba(232,237,245,0.35);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
     }
 
-    .url-row input::placeholder {
-      color: rgba(232, 237, 245, 0.2);
-    }
+    .transcript-list { display: flex; flex-direction: column; gap: 8px; }
 
-    .url-row input:focus {
-      border-color: rgba(138, 180, 212, 0.4);
-    }
-
-    .url-row button {
-      background: #8ab4d4;
-      color: #0a0c10;
-      font-size: 13px;
-      font-weight: 500;
-      padding: 9px 18px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      white-space: nowrap;
-      font-family: inherit;
-    }
-
-    .url-row button:hover {
-      background: #9dc3df;
-    }
-
-    .divider {
+    .transcript-item {
+      background: #0e1117;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin: 1rem 0;
-      font-size: 12px;
-      color: rgba(232, 237, 245, 0.25);
-    }
-
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .dropzone {
-      border: 1px dashed rgba(255, 255, 255, 0.15);
-      border-radius: 8px;
-      padding: 1.75rem;
-      text-align: center;
-      color: rgba(232, 237, 245, 0.25);
-      font-size: 13px;
-      cursor: pointer;
+      justify-content: space-between;
       transition: border-color 0.2s;
     }
-
-    .dropzone:hover {
-      border-color: rgba(138, 180, 212, 0.3);
-      color: rgba(232, 237, 245, 0.4);
-    }
-
-    /* STEPS */
-    .steps {
-      padding: 3rem 1.5rem 4rem;
-    }
-
-    .steps-label {
-      font-size: 11px;
-      color: rgba(232, 237, 245, 0.3);
-      margin-bottom: 1.5rem;
-      text-align: center;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .steps-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      max-width: 580px;
-      margin: 0 auto;
-    }
-
-    .step-card {
-      background: #0e1117;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 8px;
-      padding: 1.1rem;
-    }
-
-    .step-n {
-      font-size: 11px;
-      color: #8ab4d4;
-      margin-bottom: 0.6rem;
-    }
-
-    .step-card h4 {
-      font-size: 13px;
-      font-weight: 500;
-      color: #e8edf5;
-      margin-bottom: 0.35rem;
-    }
-
-    .step-card p {
+    .transcript-item:hover { border-color: rgba(138,180,212,0.3); }
+    .transcript-item-left { display: flex; flex-direction: column; gap: 4px; }
+    .transcript-item-title { font-size: 14px; color: #e8edf5; }
+    .transcript-item-date { font-size: 12px; color: rgba(232,237,245,0.35); }
+    .transcript-item-btn {
       font-size: 12px;
-      color: rgba(232, 237, 245, 0.35);
-      line-height: 1.6;
+      color: #8ab4d4;
+      background: none;
+      border: 1px solid rgba(138,180,212,0.3);
+      border-radius: 5px;
+      padding: 5px 12px;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .transcript-item-btn:hover { background: rgba(138,180,212,0.08); }
+
+    .empty-state {
+      text-align: center;
+      padding: 2.5rem;
+      background: #0e1117;
+      border: 1px dashed rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: rgba(232,237,245,0.3);
+      font-size: 13px;
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 2rem;
+      color: rgba(232,237,245,0.25);
+      font-size: 13px;
     }
 
     @media (max-width: 500px) {
-      .steps-row {
-        grid-template-columns: 1fr;
-      }
-
-      .hero h1 {
-        font-size: 26px;
-      }
-
-      nav {
-        padding: 0 1rem;
-      }
+      .steps-row { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 26px; }
+      nav { padding: 0 1rem; }
+      .dash-body { padding: 0 1rem 3rem; }
     }
   </style>
 </head>
-
 <body>
 
   <nav>
     <div class="logo"><span class="l1">Smart Lecture </span><span class="l2">Platform</span></div>
     <div class="nav-right">
-      <a class="nav-link" href="about.html">about us</a>
-      <a class="nav-link" href="how-works.html">how it works</a>
-      <a class="nav-btn" href="login.html">log in</a>
+      <!-- Shown when logged out -->
+      <div id="nav-logged-out" style="display:flex; gap:1.25rem; align-items:center;">
+        <a class="nav-link" href="about.html">about us</a>
+        <a class="nav-link" href="how-works.html">how it works</a>
+        <a class="nav-btn" href="login.html">log in</a>
+      </div>
+      <!-- Shown when logged in -->
+      <div id="nav-logged-in" class="nav-user">
+        <span class="nav-user-name">hi, <span id="nav-username"></span></span>
+        <button class="btn-logout" onclick="handleLogout()">log out</button>
+      </div>
     </div>
   </nav>
 
-  <section class="hero">
-    <div class="hero-brand"><span class="l1">Smart Lecture </span><span class="l2">Platform</span></div>
-    <h1>lectures are long.<span> your time isn't.</span></h1>
-    <p>upload your recording and we'll transcribe it, cut the silence, and give you something actually useful to study from.</p>
-    <div class="hero-btns">
-      <a href="login.html" class="btn-main">try it out</a>
-      <a href="example.html" class="btn-sec">see an example</a>
-    </div>
-  </section>
+  <!-- LANDING (logged out) -->
+  <div id="landing">
+    <section class="hero">
+      <div class="hero-brand"><span class="l1">Smart Lecture </span><span class="l2">Platform</span></div>
+      <h1>lectures are long.<span> your time isn't.</span></h1>
+      <p>upload your recording and we'll transcribe it, cut the silence, and give you something actually useful to study from.</p>
+      <div class="hero-btns">
+        <a href="login.html" class="btn-main">try it out</a>
+        <a href="example.html" class="btn-sec">see an example</a>
+      </div>
+    </section>
 
-  <section class="upload">
-    <div class="upload-inner">
-      <h3>upload your lecture</h3>
-      <p>paste a video url, or drop the file directly</p>
-      <div class="url-row">
-        <input type="text" placeholder="https://URLvideo.com/..." />
-        <button>process</button>
+    <section class="upload">
+      <div class="upload-inner">
+        <h3>upload your lecture</h3>
+        <p>paste a video url, or drop the file directly</p>
+        <div class="url-row">
+          <input type="text" placeholder="https://URLvideo.com/..." />
+          <button>process</button>
+        </div>
+        <div class="divider">or</div>
+        <div class="dropzone">drag your video here</div>
       </div>
-      <div class="divider">or</div>
-      <div class="dropzone">drag your video here</div>
-    </div>
-  </section>
+    </section>
 
-  <section class="steps">
-    <div class="steps-label">how it works</div>
-    <div class="steps-row">
-      <div class="step-card">
-        <div class="step-n">01</div>
-        <h4>upload the video</h4>
-        <p>link or file, whatever you've got</p>
+    <section class="steps">
+      <div class="steps-label">how it works</div>
+      <div class="steps-row">
+        <div class="step-card">
+          <div class="step-n">01</div>
+          <h4>upload the video</h4>
+          <p>link or file, whatever you've got</p>
+        </div>
+        <div class="step-card">
+          <div class="step-n">02</div>
+          <h4>ai processes it</h4>
+          <p>transcribes and removes silence automatically</p>
+        </div>
+        <div class="step-card">
+          <div class="step-n">03</div>
+          <h4>read the transcript</h4>
+          <p>clean text, saved and ready to study</p>
+        </div>
       </div>
-      <div class="step-card">
-        <div class="step-n">02</div>
-        <h4>ai processes it</h4>
-        <p>transcribes and removes silence automatically</p>
-      </div>
-      <div class="step-card">
-        <div class="step-n">03</div>
-        <h4>read the transcript</h4>
-        <p>clean text, saved and ready to study</p>
-      </div>
+    </section>
+  </div>
+
+  <!-- DASHBOARD (logged in) -->
+  <div id="dashboard">
+    <div class="dash-header">
+      <h2>welcome back, <span id="dash-username"></span></h2>
+      <p>here are your transcripts — or start a new one.</p>
     </div>
-  </section>
+    <div class="dash-body">
+
+      <!-- New transcript -->
+      <div class="new-upload-card">
+        <h3>new transcript</h3>
+        <p>paste a video url, or drop the file directly</p>
+        <div class="url-row">
+          <input type="text" id="dash-url-input" placeholder="https://URLvideo.com/..." />
+          <button onclick="handleProcess()">process</button>
+        </div>
+        <div class="divider">or</div>
+        <div class="dropzone">drag your video here</div>
+      </div>
+
+      <!-- Transcripts list -->
+      <div class="transcripts-section">
+        <h3>your transcripts</h3>
+        <div class="transcript-list" id="transcript-list">
+          <div class="loading-state">loading your transcripts...</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCeHn5ACani1scy-GsrAfGha-ohISaWV2w",
@@ -390,11 +377,94 @@
     };
 
     const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
     const db = getFirestore(app);
 
-    console.log("Firebase conectado:", app.name);
+    // Detect auth state
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // --- LOGGED IN ---
+        const name = user.displayName || user.email.split("@")[0];
+
+        // Show dashboard, hide landing
+        document.getElementById("landing").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+
+        // Update nav
+        document.getElementById("nav-logged-out").style.display = "none";
+        document.getElementById("nav-logged-in").style.display = "flex";
+        document.getElementById("nav-username").textContent = name;
+        document.getElementById("dash-username").textContent = name;
+
+        // Load transcripts
+        await loadTranscripts(user.uid);
+
+      } else {
+        // --- LOGGED OUT ---
+        document.getElementById("landing").style.display = "block";
+        document.getElementById("dashboard").style.display = "none";
+        document.getElementById("nav-logged-out").style.display = "flex";
+        document.getElementById("nav-logged-in").style.display = "none";
+      }
+    });
+
+    async function loadTranscripts(uid) {
+      const list = document.getElementById("transcript-list");
+      try {
+        const q = query(
+          collection(db, "transcripts"),
+          where("uid", "==", uid),
+          orderBy("createdAt", "desc")
+        );
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) {
+          list.innerHTML = `<div class="empty-state">no transcripts yet — process your first lecture above.</div>`;
+          return;
+        }
+
+        list.innerHTML = "";
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          const date = data.createdAt?.toDate
+            ? data.createdAt.toDate().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })
+            : "—";
+
+          const item = document.createElement("div");
+          item.className = "transcript-item";
+          item.innerHTML = `
+            <div class="transcript-item-left">
+              <span class="transcript-item-title">${data.title || "untitled transcript"}</span>
+              <span class="transcript-item-date">${date}</span>
+            </div>
+            <button class="transcript-item-btn" onclick="viewTranscript('${doc.id}')">view</button>
+          `;
+          list.appendChild(item);
+        });
+
+      } catch (err) {
+        console.error("Error loading transcripts:", err);
+        list.innerHTML = `<div class="empty-state">could not load transcripts. check your connection.</div>`;
+      }
+    }
+
+    // Logout
+    window.handleLogout = async function () {
+      await signOut(auth);
+    };
+
+    // Process button (placeholder — connect your backend here)
+    window.handleProcess = function () {
+      const url = document.getElementById("dash-url-input").value.trim();
+      if (!url) return;
+      alert("Processing: " + url + "\n\n(connect your transcription backend here)");
+    };
+
+    // View transcript (placeholder)
+    window.viewTranscript = function (id) {
+      alert("Transcript ID: " + id + "\n\n(redirect to transcript detail page here)");
+    };
   </script>
 
 </body>
-
 </html>
