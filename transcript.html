@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transcript — Smart Lecture Platform</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; background: #0a0c10; color: #e8edf5; font-family: system-ui, -apple-system, sans-serif; }
+
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 54px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .logo { font-size: 17px; font-weight: 500; text-decoration: none; }
+    .logo .l1 { color: #e8edf5; }
+    .logo .l2 { color: #8ab4d4; }
+    .nav-back {
+      font-size: 13px; color: rgba(232,237,245,0.4);
+      text-decoration: none; display: flex; align-items: center; gap: 6px;
+    }
+    .nav-back:hover { color: #8ab4d4; }
+
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Header */
+    .transcript-header { display: flex; flex-direction: column; gap: 0.5rem; }
+    .transcript-title {
+      font-size: 22px; font-weight: 500; color: #e8edf5;
+    }
+    .transcript-meta {
+      font-size: 13px; color: rgba(232,237,245,0.35);
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .status-badge {
+      font-size: 11px; padding: 2px 9px; border-radius: 4px; font-weight: 500;
+    }
+    .status-done { background: rgba(93,202,165,0.1); color: #5dcaa5; }
+    .status-processing { background: rgba(138,180,212,0.1); color: #8ab4d4; }
+    .status-error { background: rgba(240,149,149,0.1); color: #f09595; }
+
+    /* Action buttons */
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn-action {
+      font-size: 13px; padding: 8px 18px;
+      border-radius: 6px; border: 1px solid rgba(255,255,255,0.12);
+      background: transparent; color: rgba(232,237,245,0.6);
+      cursor: pointer; font-family: inherit;
+      display: flex; align-items: center; gap: 6px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-action:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.2); color: #e8edf5; }
+    .btn-action.primary {
+      background: #8ab4d4; color: #0a0c10;
+      border-color: transparent; font-weight: 500;
+    }
+    .btn-action.primary:hover { background: #9dc3df; }
+
+    /* Video player */
+    .video-section {
+      background: #0e1117;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .video-section-header {
+      padding: 1rem 1.25rem;
+      font-size: 12px;
+      color: rgba(232,237,245,0.3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .video-embed {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+    }
+    .video-embed iframe { width: 100%; height: 100%; border: none; }
+    .video-link-fallback {
+      padding: 1.25rem;
+      font-size: 13px;
+      color: rgba(232,237,245,0.4);
+    }
+    .video-link-fallback a { color: #8ab4d4; }
+
+    /* Transcript text */
+    .transcript-section {
+      background: #0e1117;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .transcript-section-header {
+      padding: 1rem 1.25rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .transcript-section-header span {
+      font-size: 12px; color: rgba(232,237,245,0.3);
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .btn-copy {
+      font-size: 12px; color: #8ab4d4;
+      background: none; border: 1px solid rgba(138,180,212,0.3);
+      border-radius: 5px; padding: 4px 12px;
+      cursor: pointer; font-family: inherit;
+    }
+    .btn-copy:hover { background: rgba(138,180,212,0.08); }
+    .transcript-body {
+      padding: 1.5rem 1.25rem;
+      font-size: 15px;
+      color: rgba(232,237,245,0.75);
+      line-height: 1.9;
+      white-space: pre-wrap;
+      max-height: 520px;
+      overflow-y: auto;
+    }
+    .transcript-body::-webkit-scrollbar { width: 4px; }
+    .transcript-body::-webkit-scrollbar-track { background: transparent; }
+    .transcript-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+    /* Loading / error states */
+    .state-box {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: rgba(232,237,245,0.3);
+      font-size: 14px;
+    }
+    .state-box p { margin-top: 0.5rem; font-size: 13px; }
+
+    @media (max-width: 500px) {
+      nav { padding: 0 1rem; }
+      .page { padding: 1.5rem 1rem 4rem; }
+      .transcript-title { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="index.html">
+      <span class="l1">Smart Lecture </span><span class="l2">Platform</span>
+    </a>
+    <a class="nav-back" href="index.html">← back to dashboard</a>
+  </nav>
+
+  <div class="page" id="page-content">
+    <div class="state-box">loading transcript...</div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCeHn5ACani1scy-GsrAfGha-ohISaWV2w",
+      authDomain: "smart-lecture-27d96.firebaseapp.com",
+      projectId: "smart-lecture-27d96",
+      storageBucket: "smart-lecture-27d96.firebasestorage.app",
+      messagingSenderId: "27013760765",
+      appId: "1:27013760765:web:d66cd3c9c21f02f9cce094"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Get transcript ID from URL
+    const params = new URLSearchParams(window.location.search);
+    const transcriptId = params.get("id");
+
+    if (!transcriptId) {
+      showError("No transcript ID found.");
+    } else {
+      onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+          window.location.href = "login.html";
+          return;
+        }
+        await loadTranscript(transcriptId, user.uid);
+      });
+    }
+
+    async function loadTranscript(id, uid) {
+      try {
+        const docRef = doc(db, "transcripts", id);
+        const docSnap = await getDoc(docRef);
+
+        if (!docSnap.exists()) {
+          showError("Transcript not found.");
+          return;
+        }
+
+        const data = docSnap.data();
+
+        // Security: only the owner can view
+        if (data.uid !== uid) {
+          showError("You don't have permission to view this transcript.");
+          return;
+        }
+
+        renderTranscript(id, data);
+
+      } catch (err) {
+        console.error(err);
+        showError("Could not load transcript. Check your connection.");
+      }
+    }
+
+    function renderTranscript(id, data) {
+      const date = data.createdAt?.toDate
+        ? data.createdAt.toDate().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
+        : "—";
+
+      const statusClass = `status-${data.status || "processing"}`;
+      const statusLabel = data.status || "processing";
+
+      // Build video embed if YouTube URL
+      let videoHtml = "";
+      if (data.videoUrl && !data.videoUrl.startsWith("gs://")) {
+        const youtubeId = getYoutubeId(data.videoUrl);
+        if (youtubeId) {
+          videoHtml = `
+            <div class="video-section">
+              <div class="video-section-header">original video</div>
+              <div class="video-embed">
+                <iframe src="https://www.youtube.com/embed/${youtubeId}" allowfullscreen></iframe>
+              </div>
+            </div>`;
+        } else {
+          videoHtml = `
+            <div class="video-section">
+              <div class="video-section-header">original video</div>
+              <div class="video-link-fallback">
+                <a href="${data.videoUrl}" target="_blank" rel="noopener">→ open original video</a>
+              </div>
+            </div>`;
+        }
+      }
+
+      const transcriptText = data.transcript || "No transcript content available.";
+
+      document.getElementById("page-content").innerHTML = `
+        <div class="transcript-header">
+          <div class="transcript-title">${data.title || "Untitled transcript"}</div>
+          <div class="transcript-meta">
+            <span>${date}</span>
+            <span>·</span>
+            <span class="status-badge ${statusClass}">${statusLabel}</span>
+            ${data.originalDuration ? `<span>·</span><span>${formatDuration(data.originalDuration)} original</span>` : ""}
+            ${data.processedDuration ? `<span>→ ${formatDuration(data.processedDuration)} processed</span>` : ""}
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn-action primary" onclick="downloadTxt()">↓ download .txt</button>
+          <button class="btn-action" onclick="downloadPdf()">↓ download .pdf</button>
+          <button class="btn-action" onclick="window.location.href='index.html'">← back to dashboard</button>
+        </div>
+
+        ${videoHtml}
+
+        <div class="transcript-section">
+          <div class="transcript-section-header">
+            <span>transcript</span>
+            <button class="btn-copy" onclick="copyTranscript()">copy</button>
+          </div>
+          <div class="transcript-body" id="transcript-text">${escapeHtml(transcriptText)}</div>
+        </div>
+      `;
+
+      // Store for download functions
+      window._transcriptData = { title: data.title || "transcript", text: transcriptText };
+    }
+
+    // Download as .txt
+    window.downloadTxt = function () {
+      const { title, text } = window._transcriptData;
+      const blob = new Blob([text], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${title}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+
+    // Download as .pdf using browser print
+    window.downloadPdf = function () {
+      const { title, text } = window._transcriptData;
+      const printWindow = window.open("", "_blank");
+      printWindow.document.write(`
+        <!DOCTYPE html><html><head>
+        <meta charset="UTF-8">
+        <title>${title}</title>
+        <style>
+          body { font-family: Georgia, serif; font-size: 13pt; line-height: 1.8; margin: 2.5cm; color: #111; }
+          h1 { font-size: 18pt; margin-bottom: 0.5cm; }
+          p { margin-bottom: 0.4cm; }
+        </style>
+        </head><body>
+        <h1>${title}</h1>
+        <p>${text.replace(/\n\n/g, "</p><p>").replace(/\n/g, "<br>")}</p>
+        </body></html>
+      `);
+      printWindow.document.close();
+      printWindow.focus();
+      setTimeout(() => { printWindow.print(); }, 500);
+    };
+
+    // Copy to clipboard
+    window.copyTranscript = async function () {
+      const text = document.getElementById("transcript-text").textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        const btn = document.querySelector(".btn-copy");
+        btn.textContent = "copied!";
+        setTimeout(() => { btn.textContent = "copy"; }, 2000);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    // Helpers
+    function getYoutubeId(url) {
+      const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+      return match ? match[1] : null;
+    }
+
+    function formatDuration(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return `${m}m ${s}s`;
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function showError(msg) {
+      document.getElementById("page-content").innerHTML = `
+        <div class="state-box">
+          <strong>${msg}</strong>
+          <p><a href="index.html" style="color:#8ab4d4">← back to dashboard</a></p>
+        </div>`;
+    }
+  </script>
+
+</body>
+</html>
