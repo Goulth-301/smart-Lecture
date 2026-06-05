@@ -17,7 +17,13 @@
     .nav-link:hover { color: #8ab4d4; }
     .nav-btn { font-size: 13px; padding: 6px 16px; border: 1px solid rgba(138,180,212,0.5); border-radius: 6px; background: transparent; color: #8ab4d4; cursor: pointer; text-decoration: none; }
     .nav-btn:hover { background: rgba(138,180,212,0.08); }
+    .nav-user { display: none; align-items: center; gap: 1rem; }
+    .nav-user-name { font-size: 13px; color: rgba(232,237,245,0.6); }
+    .nav-user-name span { color: #8ab4d4; }
+    .btn-logout { font-size: 12px; color: rgba(232,237,245,0.35); background: none; border: none; cursor: pointer; font-family: inherit; padding: 0; }
+    .btn-logout:hover { color: #e8edf5; }
 
+    /* ── LANDING ── */
     .hero { padding: 5rem 1.5rem 3.5rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.08); }
     .hero-brand { font-size: 24px; font-weight: 500; margin-bottom: 1.75rem; }
     .hero-brand .l1 { color: #e8edf5; } .hero-brand .l2 { color: #8ab4d4; }
@@ -35,6 +41,15 @@
     .upload-inner h3 { font-size: 16px; font-weight: 500; color: #e8edf5; margin-bottom: 0.3rem; }
     .upload-inner > p { font-size: 13px; color: rgba(232,237,245,0.4); margin-bottom: 1rem; }
 
+    .steps { padding: 3rem 1.5rem 4rem; }
+    .steps-label { font-size: 11px; color: rgba(232,237,245,0.3); margin-bottom: 1.5rem; text-align: center; letter-spacing: 0.1em; text-transform: uppercase; }
+    .steps-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; max-width: 580px; margin: 0 auto; }
+    .step-card { background: #0e1117; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 1.1rem; }
+    .step-n { font-size: 11px; color: #8ab4d4; margin-bottom: 0.6rem; }
+    .step-card h4 { font-size: 13px; font-weight: 500; color: #e8edf5; margin-bottom: 0.35rem; }
+    .step-card p { font-size: 12px; color: rgba(232,237,245,0.35); line-height: 1.6; }
+
+    /* ── SHARED DROPZONE ── */
     .dropzone {
       display: flex;
       align-items: center;
@@ -51,55 +66,65 @@
     }
     .dropzone:hover { border-color: rgba(138,180,212,0.5); background: rgba(138,180,212,0.03); }
     .dropzone.drag-over { border-color: #8ab4d4; background: rgba(138,180,212,0.08); }
-
     .dropzone-content { display: flex; flex-direction: column; align-items: center; gap: 10px; }
     .dropzone-icon { width: 42px; height: 42px; opacity: .9; }
     .dropzone-title { color: rgba(232,237,245,.7); font-size: 15px; }
     .dropzone-subtitle { color: rgba(232,237,245,.35); font-size: 12px; }
 
-    #selectedFile { text-align: center; margin-top: 12px; color: #8ab4d4; font-size: 13px; }
+    .selected-file { text-align: center; margin-top: 12px; color: #8ab4d4; font-size: 13px; min-height: 18px; }
 
-    #uploadBtn {
-      display: block;
-      width: 100%;
-      margin-top: 1rem;
-      background: #8ab4d4;
-      color: #0a0c10;
-      font-size: 13px;
-      font-weight: 500;
-      padding: 14px 18px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.2s;
+    .upload-btn {
+      display: block; width: 100%; margin-top: 1rem;
+      background: #8ab4d4; color: #0a0c10;
+      font-size: 13px; font-weight: 500; padding: 14px 18px;
+      border-radius: 6px; border: none; cursor: pointer;
+      font-family: inherit; transition: background 0.2s;
     }
-    #uploadBtn:hover { background: #9dc3df; }
-    #uploadBtn:disabled { background: rgba(138,180,212,0.3); color: rgba(10,12,16,0.5); cursor: not-allowed; }
+    .upload-btn:hover { background: #9dc3df; }
+    .upload-btn:disabled { background: rgba(138,180,212,0.3); color: rgba(10,12,16,0.5); cursor: not-allowed; }
 
-    #statusMsg { font-size: 12px; margin-top: 0.75rem; min-height: 18px; text-align: center; }
-    #statusMsg.success { color: #6fcf97; }
-    #statusMsg.error   { color: #eb5757; }
-    #statusMsg.info    { color: rgba(232,237,245,0.45); }
+    .status-msg { font-size: 12px; margin-top: 0.75rem; min-height: 18px; text-align: center; }
+    .status-msg.success { color: #6fcf97; }
+    .status-msg.error   { color: #eb5757; }
+    .status-msg.info    { color: rgba(232,237,245,0.45); }
 
-    #transcriptBox { display: none; margin-top: 1.25rem; background: #0a0c10; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1rem; }
-    #transcriptBox h4 { font-size: 13px; font-weight: 500; color: #e8edf5; margin-bottom: 0.6rem; }
-    #transcriptText { font-size: 12px; color: rgba(232,237,245,0.6); line-height: 1.7; max-height: 180px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
-    #downloadBtn { display: block; width: 100%; margin-top: 0.85rem; background: transparent; color: #8ab4d4; font-size: 13px; font-weight: 500; padding: 9px 18px; border-radius: 6px; border: 1px solid rgba(138,180,212,0.4); cursor: pointer; font-family: inherit; transition: background 0.2s; }
-    #downloadBtn:hover { background: rgba(138,180,212,0.08); }
+    .transcript-box { display: none; margin-top: 1.25rem; background: #0a0c10; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1rem; }
+    .transcript-box h4 { font-size: 13px; font-weight: 500; color: #e8edf5; margin-bottom: 0.6rem; }
+    .transcript-box-text { font-size: 12px; color: rgba(232,237,245,0.6); line-height: 1.7; max-height: 180px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
+    .download-btn { display: block; width: 100%; margin-top: 0.85rem; background: transparent; color: #8ab4d4; font-size: 13px; font-weight: 500; padding: 9px 18px; border-radius: 6px; border: 1px solid rgba(138,180,212,0.4); cursor: pointer; font-family: inherit; transition: background 0.2s; }
+    .download-btn:hover { background: rgba(138,180,212,0.08); }
 
-    .steps { padding: 3rem 1.5rem 4rem; }
-    .steps-label { font-size: 11px; color: rgba(232,237,245,0.3); margin-bottom: 1.5rem; text-align: center; letter-spacing: 0.1em; text-transform: uppercase; }
-    .steps-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; max-width: 580px; margin: 0 auto; }
-    .step-card { background: #0e1117; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 1.1rem; }
-    .step-n { font-size: 11px; color: #8ab4d4; margin-bottom: 0.6rem; }
-    .step-card h4 { font-size: 13px; font-weight: 500; color: #e8edf5; margin-bottom: 0.35rem; }
-    .step-card p { font-size: 12px; color: rgba(232,237,245,0.35); line-height: 1.6; }
+    /* ── DASHBOARD ── */
+    #dashboard { display: none; }
+    .dash-header { padding: 2.5rem 2rem 0; max-width: 780px; margin: 0 auto; }
+    .dash-header h2 { font-size: 22px; font-weight: 500; color: #e8edf5; margin-bottom: 0.3rem; }
+    .dash-header h2 span { color: #8ab4d4; }
+    .dash-header p { font-size: 13px; color: rgba(232,237,245,0.4); }
+    .dash-body { max-width: 780px; margin: 2rem auto; padding: 0 2rem 4rem; display: flex; flex-direction: column; gap: 2rem; }
+    .new-upload-card { background: #0e1117; border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 1.75rem; }
+    .new-upload-card h3 { font-size: 15px; font-weight: 500; color: #e8edf5; margin-bottom: 0.3rem; }
+    .new-upload-card > p { font-size: 13px; color: rgba(232,237,245,0.4); margin-bottom: 1rem; }
+    .transcripts-section h3 { font-size: 13px; color: rgba(232,237,245,0.35); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; }
+    .transcript-list { display: flex; flex-direction: column; gap: 8px; }
+    .transcript-item { background: #0e1117; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; transition: border-color 0.2s; }
+    .transcript-item:hover { border-color: rgba(138,180,212,0.3); }
+    .transcript-item-left { display: flex; flex-direction: column; gap: 4px; }
+    .transcript-item-title { font-size: 14px; color: #e8edf5; }
+    .transcript-item-date { font-size: 12px; color: rgba(232,237,245,0.35); }
+    .transcript-item-status { font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+    .status-done { background: rgba(93,202,165,0.1); color: #5dcaa5; }
+    .status-processing { background: rgba(138,180,212,0.1); color: #8ab4d4; }
+    .status-error { background: rgba(240,149,149,0.1); color: #f09595; }
+    .transcript-item-btn { font-size: 12px; color: #8ab4d4; background: none; border: 1px solid rgba(138,180,212,0.3); border-radius: 5px; padding: 5px 12px; cursor: pointer; font-family: inherit; white-space: nowrap; }
+    .transcript-item-btn:hover { background: rgba(138,180,212,0.08); }
+    .empty-state { text-align: center; padding: 2.5rem; background: #0e1117; border: 1px dashed rgba(255,255,255,0.1); border-radius: 8px; color: rgba(232,237,245,0.3); font-size: 13px; }
+    .loading-state { text-align: center; padding: 2rem; color: rgba(232,237,245,0.25); font-size: 13px; }
 
     @media (max-width: 500px) {
       .steps-row { grid-template-columns: 1fr; }
       .hero h1 { font-size: 26px; }
       nav { padding: 0 1rem; }
+      .dash-body { padding: 0 1rem 3rem; }
     }
   </style>
 </head>
@@ -108,122 +133,204 @@
   <nav>
     <div class="logo"><span class="l1">Smart Lecture </span><span class="l2">Platform</span></div>
     <div class="nav-right">
-      <a class="nav-link" href="about.html">about us</a>
-      <a class="nav-link" href="how-works.html">how it works</a>
-      <a class="nav-btn" href="login.html">log in</a>
+      <div id="nav-logged-out" style="display:flex; gap:1.25rem; align-items:center;">
+        <a class="nav-link" href="about.html">about us</a>
+        <a class="nav-link" href="how-works.html">how it works</a>
+        <a class="nav-btn" href="login.html">log in</a>
+      </div>
+      <div id="nav-logged-in" class="nav-user">
+        <span class="nav-user-name">hi, <span id="nav-username"></span></span>
+        <button class="btn-logout" onclick="handleLogout()">log out</button>
+      </div>
     </div>
   </nav>
 
-  <section class="hero">
-    <div class="hero-brand"><span class="l1">Smart Lecture </span><span class="l2">Platform</span></div>
-    <h1>lectures are long.<span> your time isn't.</span></h1>
-    <p>upload your recording and we'll transcribe it, cut the silence, and give you something actually useful to study from.</p>
-    <div class="hero-btns">
-      <a href="login.html" class="btn-main">try it out</a>
-      <a href="example.html" class="btn-sec">see an example</a>
-    </div>
-  </section>
-
-  <section class="upload">
-    <div class="upload-inner">
-      <h3>upload your lecture</h3>
-      <p>drop an mp3, wav, mp4 or lecture recording</p>
-
-      <label for="audioFile" class="dropzone" id="dropzone">
-        <div class="dropzone-content">
-          <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none">
-            <path d="M12 15V7" stroke="#8ab4d4" stroke-width="1.8" stroke-linecap="round"/>
-            <path d="M8.5 10.5L12 7L15.5 10.5" stroke="#8ab4d4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            <rect x="3" y="3" width="18" height="18" rx="4" stroke="rgba(255,255,255,.25)"/>
-          </svg>
-          <div class="dropzone-title">Click or drag your file here</div>
-          <div class="dropzone-subtitle">Supports MP3, WAV, MP4, M4A</div>
+  <!-- ── LANDING (logged out) ── -->
+  <div id="landing">
+    <section class="hero">
+      <div class="hero-brand"><span class="l1">Smart Lecture </span><span class="l2">Platform</span></div>
+      <h1>lectures are long.<span> your time isn't.</span></h1>
+      <p>upload your recording and we'll transcribe it, cut the silence, and give you something actually useful to study from.</p>
+      <div class="hero-btns">
+        <a href="login.html" class="btn-main">try it out</a>
+        <a href="example.html" class="btn-sec">see an example</a>
+      </div>
+    </section>
+    <section class="upload">
+      <div class="upload-inner">
+        <h3>upload your lecture</h3>
+        <p>drop an mp3, wav, mp4 or lecture recording</p>
+        <label for="landing-file" class="dropzone" id="landing-dropzone">
+          <div class="dropzone-content">
+            <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none">
+              <path d="M12 15V7" stroke="#8ab4d4" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M8.5 10.5L12 7L15.5 10.5" stroke="#8ab4d4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="3" y="3" width="18" height="18" rx="4" stroke="rgba(255,255,255,.25)"/>
+            </svg>
+            <div class="dropzone-title">Click or drag your file here</div>
+            <div class="dropzone-subtitle">Supports MP3, WAV, MP4, M4A</div>
+          </div>
+          <input type="file" id="landing-file" accept="audio/*,video/*,.mp3,.mp4,.wav,.m4a,.ogg,.webm" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;" />
+        </label>
+        <p class="selected-file" id="landing-selected"></p>
+        <button class="upload-btn" id="landing-upload-btn" disabled>Upload &amp; Transcribe</button>
+        <p class="status-msg info" id="landing-status"></p>
+        <div class="transcript-box" id="landing-transcript-box">
+          <h4>Transcript</h4>
+          <div class="transcript-box-text" id="landing-transcript-text"></div>
+          <button class="download-btn" id="landing-download-btn">Download PDF</button>
         </div>
-        <input
-          type="file"
-          id="audioFile"
-          accept="audio/*,video/*,.mp3,.mp4,.wav,.m4a,.ogg,.webm"
-          style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;"
-        />
-      </label>
+      </div>
+    </section>
+    <section class="steps">
+      <div class="steps-label">how it works</div>
+      <div class="steps-row">
+        <div class="step-card"><div class="step-n">01</div><h4>upload the audio</h4><p>mp3, wav — whatever you've got</p></div>
+        <div class="step-card"><div class="step-n">02</div><h4>ai transcribes it</h4><p>AssemblyAI processes a 1-hour file in ~5 min</p></div>
+        <div class="step-card"><div class="step-n">03</div><h4>download transcript</h4><p>clean pdf, ready to study from</p></div>
+      </div>
+    </section>
+  </div>
 
-      <p id="selectedFile"></p>
+  <!-- ── DASHBOARD (logged in) ── -->
+  <div id="dashboard">
+    <div class="dash-header">
+      <h2>welcome back, <span id="dash-username"></span></h2>
+      <p>here are your transcripts — or start a new one.</p>
+    </div>
+    <div class="dash-body">
+      <div class="new-upload-card">
+        <h3>new transcript</h3>
+        <p>drop an mp3, wav, mp4 or lecture recording</p>
+        <label for="dash-file" class="dropzone" id="dash-dropzone">
+          <div class="dropzone-content">
+            <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none">
+              <path d="M12 15V7" stroke="#8ab4d4" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M8.5 10.5L12 7L15.5 10.5" stroke="#8ab4d4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="3" y="3" width="18" height="18" rx="4" stroke="rgba(255,255,255,.25)"/>
+            </svg>
+            <div class="dropzone-title">Click or drag your file here</div>
+            <div class="dropzone-subtitle">Supports MP3, WAV, MP4, M4A</div>
+          </div>
+          <input type="file" id="dash-file" accept="audio/*,video/*,.mp3,.mp4,.wav,.m4a,.ogg,.webm" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;" />
+        </label>
+        <p class="selected-file" id="dash-selected"></p>
+        <button class="upload-btn" id="dash-upload-btn" disabled>Upload &amp; Transcribe</button>
+        <p class="status-msg info" id="dash-status"></p>
+        <div class="transcript-box" id="dash-transcript-box">
+          <h4>Transcript</h4>
+          <div class="transcript-box-text" id="dash-transcript-text"></div>
+          <button class="download-btn" id="dash-download-btn">Download PDF</button>
+        </div>
+      </div>
 
-      <button id="uploadBtn" disabled>Upload &amp; Transcribe</button>
-
-      <p id="statusMsg" class="info"></p>
-
-      <div id="transcriptBox">
-        <h4>Transcript</h4>
-        <div id="transcriptText"></div>
-        <button id="downloadBtn">Download PDF</button>
+      <div class="transcripts-section">
+        <h3>your transcripts</h3>
+        <div class="transcript-list" id="transcript-list">
+          <div class="loading-state">loading your transcripts...</div>
+        </div>
       </div>
     </div>
-  </section>
-
-  <section class="steps">
-    <div class="steps-label">how it works</div>
-    <div class="steps-row">
-      <div class="step-card"><div class="step-n">01</div><h4>upload the audio</h4><p>mp3, wav — whatever you've got</p></div>
-      <div class="step-card"><div class="step-n">02</div><h4>ai transcribes it</h4><p>AssemblyAI processes a 1-hour file in ~5 min</p></div>
-      <div class="step-card"><div class="step-n">03</div><h4>download transcript</h4><p>clean pdf, ready to study from</p></div>
-    </div>
-  </section>
+  </div>
 
   <script type="module">
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getStorage, ref, uploadBytesResumable, getDownloadURL }
-      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
     const ASSEMBLYAI_KEY = "3cae4ce5993c422fbced9580007b03de";
 
     const firebaseConfig = {
-      apiKey:            "AIzaSyCeHn5ACani1scy-GsrAfGha-ohISaWV2w",
-      authDomain:        "smart-lecture-27d96.firebaseapp.com",
-      projectId:         "smart-lecture-27d96",
-      storageBucket:     "smart-lecture-27d96.firebasestorage.app",
+      apiKey: "AIzaSyCeHn5ACani1scy-GsrAfGha-ohISaWV2w",
+      authDomain: "smart-lecture-27d96.firebaseapp.com",
+      projectId: "smart-lecture-27d96",
+      storageBucket: "smart-lecture-27d96.firebasestorage.app",
       messagingSenderId: "27013760765",
-      appId:             "1:27013760765:web:d66cd3c9c21f02f9cce094"
+      appId: "1:27013760765:web:d66cd3c9c21f02f9cce094"
     };
 
     const app     = initializeApp(firebaseConfig);
+    const auth    = getAuth(app);
+    const db      = getFirestore(app);
     const storage = getStorage(app);
 
-    const dropzone       = document.getElementById("dropzone");
-    const fileInput      = document.getElementById("audioFile");
-    const selectedFile   = document.getElementById("selectedFile");
-    const uploadBtn      = document.getElementById("uploadBtn");
-    const statusMsg      = document.getElementById("statusMsg");
-    const transcriptBox  = document.getElementById("transcriptBox");
-    const transcriptText = document.getElementById("transcriptText");
-    const downloadBtn    = document.getElementById("downloadBtn");
+    // ── Auth state ─────────────────────────────────────────────────
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const name = user.displayName || user.email.split("@")[0];
+        document.getElementById("landing").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+        document.getElementById("nav-logged-out").style.display = "none";
+        document.getElementById("nav-logged-in").style.display = "flex";
+        document.getElementById("nav-username").textContent = name;
+        document.getElementById("dash-username").textContent = name;
+        await loadTranscripts(user.uid);
+        resumePendingJob("dash");
+      } else {
+        document.getElementById("landing").style.display = "block";
+        document.getElementById("dashboard").style.display = "none";
+        document.getElementById("nav-logged-out").style.display = "flex";
+        document.getElementById("nav-logged-in").style.display = "none";
+        resumePendingJob("landing");
+      }
+    });
 
-    function setStatus(text, type = "info") {
-      statusMsg.textContent = text;
-      statusMsg.className = type;
+    // ── Load saved transcripts ─────────────────────────────────────
+    async function loadTranscripts(uid) {
+      const list = document.getElementById("transcript-list");
+      try {
+        const q = query(collection(db, "transcripts"), where("uid", "==", uid), orderBy("createdAt", "desc"));
+        const snapshot = await getDocs(q);
+        if (snapshot.empty) {
+          list.innerHTML = `<div class="empty-state">no transcripts yet — upload your first lecture above.</div>`;
+          return;
+        }
+        list.innerHTML = "";
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          const date = data.createdAt?.toDate
+            ? data.createdAt.toDate().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })
+            : "—";
+          const statusClass = `status-${data.status || "processing"}`;
+          const statusLabel = data.status || "processing";
+          const canView = data.status === "done";
+          const item = document.createElement("div");
+          item.className = "transcript-item";
+          item.innerHTML = `
+            <div class="transcript-item-left">
+              <span class="transcript-item-title">${data.title || "untitled transcript"}</span>
+              <span class="transcript-item-date">${date} &nbsp;·&nbsp; <span class="transcript-item-status ${statusClass}">${statusLabel}</span></span>
+            </div>
+            ${canView ? `<button class="transcript-item-btn" onclick="viewTranscript('${doc.id}')">view</button>` : ""}
+          `;
+          list.appendChild(item);
+        });
+      } catch (err) {
+        console.error("Error loading transcripts:", err);
+        list.innerHTML = `<div class="empty-state">could not load transcripts. check your connection.</div>`;
+      }
     }
 
-    function setFile(file) {
-      if (!file) return;
-      selectedFile.textContent = "Selected: " + file.name;
-      uploadBtn.disabled = false;
+    // ── Transcription helpers ──────────────────────────────────────
+    function setStatus(prefix, text, type = "info") {
+      const el = document.getElementById(`${prefix}-status`);
+      el.textContent = text;
+      el.className = `status-msg ${type}`;
     }
 
-    function showTranscript(text, filename) {
-      transcriptText.textContent = text;
-      transcriptBox.style.display = "block";
-      downloadBtn.onclick = () => {
+    function showTranscript(prefix, text, filename) {
+      document.getElementById(`${prefix}-transcript-text`).textContent = text;
+      const box = document.getElementById(`${prefix}-transcript-box`);
+      box.style.display = "block";
+      document.getElementById(`${prefix}-download-btn`).onclick = () => {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF({ unit: "pt", format: "letter" });
-        const margin = 50;
-        const lineHeight = 14;
+        const margin = 50, lineHeight = 14;
         const pageHeight = doc.internal.pageSize.getHeight();
         const maxWidth = doc.internal.pageSize.getWidth() - margin * 2;
-
         doc.setFont("Helvetica", "normal");
         doc.setFontSize(11);
-
         const lines = doc.splitTextToSize(text, maxWidth);
         let y = margin;
         lines.forEach(line => {
@@ -231,128 +338,133 @@
           doc.text(line, margin, y);
           y += lineHeight;
         });
-
         doc.save(filename.replace(/\.[^.]+$/, "") + "_transcript.pdf");
       };
     }
 
-    async function transcribeWithAssemblyAI(audioUrl, filename) {
-      setStatus("Submitting to AssemblyAI…", "info");
-
+    async function transcribeWithAssemblyAI(prefix, audioUrl, filename) {
+      setStatus(prefix, "Submitting to AssemblyAI…", "info");
       const submitRes = await fetch("https://api.assemblyai.com/v2/transcript", {
         method: "POST",
         headers: { "authorization": ASSEMBLYAI_KEY, "content-type": "application/json" },
         body: JSON.stringify({ audio_url: audioUrl, language_detection: true })
       });
-
       if (!submitRes.ok) {
         const err = await submitRes.json();
         throw new Error(err.error || "Failed to submit transcription");
       }
-
       const { id } = await submitRes.json();
-      localStorage.setItem("assemblyai_job", JSON.stringify({ id, filename }));
-      setStatus("Transcribing… a 1-hour lecture takes ~5 min.", "info");
-      pollTranscript(id, filename);
+      localStorage.setItem("assemblyai_job", JSON.stringify({ id, filename, prefix }));
+      setStatus(prefix, "Transcribing… a 1-hour lecture takes ~5 min.", "info");
+      pollTranscript(prefix, id, filename);
     }
 
-    function pollTranscript(id, filename) {
+    function pollTranscript(prefix, id, filename) {
       const interval = setInterval(async () => {
         try {
           const res  = await fetch(`https://api.assemblyai.com/v2/transcript/${id}`, {
             headers: { "authorization": ASSEMBLYAI_KEY }
           });
           const data = await res.json();
-
           if (data.status === "completed") {
             clearInterval(interval);
             localStorage.removeItem("assemblyai_job");
-            setStatus("Transcription complete!", "success");
-            showTranscript(data.text, filename);
-            uploadBtn.disabled = false;
+            setStatus(prefix, "Transcription complete!", "success");
+            showTranscript(prefix, data.text, filename);
+            document.getElementById(`${prefix}-upload-btn`).disabled = false;
           } else if (data.status === "error") {
             clearInterval(interval);
             localStorage.removeItem("assemblyai_job");
-            setStatus("Transcription error: " + data.error, "error");
-            uploadBtn.disabled = false;
+            setStatus(prefix, "Transcription error: " + data.error, "error");
+            document.getElementById(`${prefix}-upload-btn`).disabled = false;
           } else {
             const pct = data.audio_duration
-              ? Math.round((data.audio_start_from || 0) / data.audio_duration * 100)
-              : null;
-            setStatus(`Transcribing… status: ${data.status}${pct ? ` (${pct}%)` : ""}`, "info");
+              ? Math.round((data.audio_start_from || 0) / data.audio_duration * 100) : null;
+            setStatus(prefix, `Transcribing… ${data.status}${pct ? ` (${pct}%)` : ""}`, "info");
           }
-        } catch (e) {
-          console.warn("Poll error:", e);
-        }
+        } catch (e) { console.warn("Poll error:", e); }
       }, 5000);
     }
 
-    // Resume any in-progress job on page load
-    const savedJob = localStorage.getItem("assemblyai_job");
-    if (savedJob) {
-      try {
-        const { id, filename } = JSON.parse(savedJob);
-        setStatus("Resuming transcription job…", "info");
-        pollTranscript(id, filename);
-      } catch (e) {
-        localStorage.removeItem("assemblyai_job");
+    function resumePendingJob(prefix) {
+      const savedJob = localStorage.getItem("assemblyai_job");
+      if (savedJob) {
+        try {
+          const { id, filename, prefix: savedPrefix } = JSON.parse(savedJob);
+          const usePrefix = savedPrefix || prefix;
+          setStatus(usePrefix, "Resuming transcription job…", "info");
+          pollTranscript(usePrefix, id, filename);
+        } catch (e) { localStorage.removeItem("assemblyai_job"); }
       }
     }
 
-    dropzone.addEventListener("dragover", (e) => { e.preventDefault(); dropzone.classList.add("drag-over"); });
-    dropzone.addEventListener("dragleave", () => dropzone.classList.remove("drag-over"));
-    dropzone.addEventListener("drop", (e) => {
-      e.preventDefault();
-      dropzone.classList.remove("drag-over");
-      const file = e.dataTransfer.files[0];
-      if (file) {
-        const dt = new DataTransfer();
-        dt.items.add(file);
-        fileInput.files = dt.files;
-        setFile(file);
-      }
-    });
+    // ── Wire up a dropzone ─────────────────────────────────────────
+    function initDropzone(prefix) {
+      const dropzone   = document.getElementById(`${prefix}-dropzone`);
+      const fileInput  = document.getElementById(`${prefix}-file`);
+      const uploadBtn  = document.getElementById(`${prefix}-upload-btn`);
 
-    fileInput.addEventListener("change", () => {
-      if (fileInput.files.length > 0) setFile(fileInput.files[0]);
-    });
+      dropzone.addEventListener("dragover", (e) => { e.preventDefault(); dropzone.classList.add("drag-over"); });
+      dropzone.addEventListener("dragleave", () => dropzone.classList.remove("drag-over"));
+      dropzone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropzone.classList.remove("drag-over");
+        if (!auth.currentUser) { window.location.href = "login.html"; return; }
+        const file = e.dataTransfer.files[0];
+        if (file) { const dt = new DataTransfer(); dt.items.add(file); fileInput.files = dt.files; onFileSelected(prefix, file); }
+      });
+      dropzone.addEventListener("click", (e) => {
+        if (!auth.currentUser) { e.preventDefault(); window.location.href = "register.html"; }
+      });
+      fileInput.addEventListener("change", () => {
+        if (!auth.currentUser) { window.location.href = "register.html"; return; }
+        if (fileInput.files[0]) onFileSelected(prefix, fileInput.files[0]);
+      });
 
-    uploadBtn.addEventListener("click", async () => {
-      const file = fileInput.files[0];
-      if (!file) { setStatus("Please select an audio file first.", "error"); return; }
-
-      uploadBtn.disabled = true;
-      transcriptBox.style.display = "none";
-
-      const filename   = `${Date.now()}_${file.name}`;
-      const storageRef = ref(storage, `audio/${filename}`);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      setStatus("Uploading…", "info");
-
-      uploadTask.on(
-        "state_changed",
-        (snap) => {
-          const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
-          setStatus(`Uploading… ${pct}%`, "info");
-        },
-        (err) => {
-          console.error("Upload error:", err);
-          setStatus("Upload failed: " + err.message, "error");
-          uploadBtn.disabled = false;
-        },
-        async () => {
-          try {
-            const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-            await transcribeWithAssemblyAI(downloadUrl, filename);
-          } catch (err) {
-            console.error(err);
-            setStatus("Error: " + err.message, "error");
+      uploadBtn.addEventListener("click", async () => {
+        if (!auth.currentUser) { window.location.href = "login.html"; return; }
+        const file = fileInput.files[0];
+        if (!file) { setStatus(prefix, "Please select a file first.", "error"); return; }
+        uploadBtn.disabled = true;
+        document.getElementById(`${prefix}-transcript-box`).style.display = "none";
+        const filename = `${Date.now()}_${file.name}`;
+        const storageRef = ref(storage, `audio/${filename}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        setStatus(prefix, "Uploading…", "info");
+        uploadTask.on("state_changed",
+          (snap) => {
+            const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
+            setStatus(prefix, `Uploading… ${pct}%`, "info");
+          },
+          (err) => {
+            setStatus(prefix, "Upload failed: " + err.message, "error");
             uploadBtn.disabled = false;
+          },
+          async () => {
+            try {
+              const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+              await transcribeWithAssemblyAI(prefix, downloadUrl, filename);
+            } catch (err) {
+              setStatus(prefix, "Error: " + err.message, "error");
+              uploadBtn.disabled = false;
+            }
           }
-        }
-      );
-    });
+        );
+      });
+    }
+
+    function onFileSelected(prefix, file) {
+      document.getElementById(`${prefix}-selected`).textContent = "Selected: " + file.name;
+      document.getElementById(`${prefix}-upload-btn`).disabled = false;
+    }
+
+    // Init both dropzones
+    initDropzone("landing");
+    initDropzone("dash");
+
+    // ── Logout / view ──────────────────────────────────────────────
+    window.handleLogout = async function () { await signOut(auth); };
+    window.viewTranscript = function (id) { window.location.href = `transcript.html?id=${id}`; };
   </script>
 
 </body>
