@@ -162,6 +162,7 @@
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+    // Firebase project configuration
     const firebaseConfig = {
       apiKey: "AIzaSyCeHn5ACani1scy-GsrAfGha-ohISaWV2w",
       authDomain: "smart-lecture-27d96.firebaseapp.com",
@@ -171,19 +172,23 @@
       appId: "1:27013760765:web:d66cd3c9c21f02f9cce094"
     };
 
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // Get transcript ID from URL
+    // Read the transcript ID from the URL query string (?id=...)
     const params = new URLSearchParams(window.location.search);
     const transcriptId = params.get("id");
 
+    // If no ID is in the URL, show an error immediately
     if (!transcriptId) {
       showError("No transcript ID found.");
     } else {
+      // Wait for Firebase to confirm the auth state before loading the doc
       onAuthStateChanged(auth, async (user) => {
         if (!user) {
+          // Not logged in — send to login page
           window.location.href = "login.html";
           return;
         }
@@ -191,6 +196,8 @@
       });
     }
 
+    // Fetches a single transcript document from Firestore by its ID.
+    // Also checks that the logged-in user is the owner of the document.
     async function loadTranscript(id, uid) {
       try {
         const docRef = doc(db, "transcripts", id);
@@ -217,6 +224,8 @@
       }
     }
 
+    // Builds and injects the HTML for the transcript viewer page.
+    // Shows the title, date, status, optional video embed, and transcript text.
     function renderTranscript(id, data) {
       const date = data.createdAt?.toDate
         ? data.createdAt.toDate().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
@@ -283,7 +292,7 @@
       window._transcriptData = { title: data.title || "transcript", text: transcriptText };
     }
 
-    // Download as .txt
+    // Creates a plain text file in the browser and triggers a download
     window.downloadTxt = function () {
       const { title, text } = window._transcriptData;
       const blob = new Blob([text], { type: "text/plain" });
@@ -295,7 +304,8 @@
       URL.revokeObjectURL(url);
     };
 
-    // Download as .pdf using browser print
+    // Opens the transcript in a new print-friendly window and triggers the browser's print dialog
+    // Note: this is a simple approach — a proper PDF library like jsPDF could also be used here
     window.downloadPdf = function () {
       const { title, text } = window._transcriptData;
       const printWindow = window.open("", "_blank");
@@ -318,7 +328,7 @@
       setTimeout(() => { printWindow.print(); }, 500);
     };
 
-    // Copy to clipboard
+    // Copies the transcript text to the clipboard using the Clipboard API
     window.copyTranscript = async function () {
       const text = document.getElementById("transcript-text").textContent;
       try {
@@ -331,18 +341,24 @@
       }
     };
 
-    // Helpers
+    // ── Helper functions ──────────────────────────────────────────
+
+    // Extracts a YouTube video ID from a URL like:
+    // https://youtube.com/watch?v=abc123 or https://youtu.be/abc123
     function getYoutubeId(url) {
       const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
       return match ? match[1] : null;
     }
 
+    // Converts a number of seconds into a "Xm Ys" string (e.g. "65" → "1m 5s")
     function formatDuration(seconds) {
       const m = Math.floor(seconds / 60);
       const s = seconds % 60;
       return `${m}m ${s}s`;
     }
 
+    // Escapes special HTML characters to prevent XSS when inserting text into the DOM
+    // TODO: alternatively, use textContent instead of innerHTML to avoid this entirely
     function escapeHtml(text) {
       return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }

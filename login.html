@@ -160,7 +160,7 @@
       text-decoration: underline;
     }
   </style>
-
+<!-- Google reCAPTCHA script -->
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
@@ -201,14 +201,10 @@
       don't have an account? <a href="register.html">sign up</a>
     </p>
   </div>
-
+<!-- Firebase and login logic -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-    import {
-      getAuth,
-      signInWithEmailAndPassword
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCeHn5ACani1scy-GsrAfGha-ohISaWV2w",
@@ -221,7 +217,6 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
 
     window.handleLogin = async function () {
       const email = document.getElementById("email").value.trim();

@@ -6,7 +6,6 @@
   <title>Sign up — Smart Lecture Platform</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     html, body {
       min-height: 100%;
       background: #0a0c10;
@@ -17,7 +16,6 @@
       align-items: center;
       justify-content: center;
     }
-
     nav {
       position: absolute;
       top: 0; left: 0; right: 0;
@@ -31,7 +29,6 @@
     .logo { font-size: 17px; font-weight: 500; text-decoration: none; }
     .logo .l1 { color: #e8edf5; }
     .logo .l2 { color: #8ab4d4; }
-
     .card {
       width: 100%;
       max-width: 400px;
@@ -41,30 +38,10 @@
       padding: 2.5rem 2rem;
       margin: 0 1rem;
     }
-
-    .card h2 {
-      font-size: 20px;
-      font-weight: 500;
-      color: #e8edf5;
-      margin-bottom: 0.4rem;
-    }
-    .card .subtitle {
-      font-size: 13px;
-      color: rgba(232,237,245,0.4);
-      margin-bottom: 2rem;
-    }
-
-    label {
-      display: block;
-      font-size: 12px;
-      color: rgba(232,237,245,0.5);
-      margin-bottom: 0.4rem;
-      letter-spacing: 0.04em;
-    }
-
-    input[type="email"],
-    input[type="password"],
-    input[type="text"] {
+    .card h2 { font-size: 20px; font-weight: 500; color: #e8edf5; margin-bottom: 0.4rem; }
+    .card .subtitle { font-size: 13px; color: rgba(232,237,245,0.4); margin-bottom: 2rem; }
+    label { display: block; font-size: 12px; color: rgba(232,237,245,0.5); margin-bottom: 0.4rem; letter-spacing: 0.04em; }
+    input[type="email"], input[type="password"], input[type="text"] {
       width: 100%;
       background: #0a0c10;
       border: 1px solid rgba(255,255,255,0.12);
@@ -79,14 +56,7 @@
     }
     input:focus { border-color: rgba(138,180,212,0.5); }
     input::placeholder { color: rgba(232,237,245,0.2); }
-
-    .password-hint {
-      font-size: 11px;
-      color: rgba(232,237,245,0.25);
-      margin-top: -1rem;
-      margin-bottom: 1.25rem;
-    }
-
+    .password-hint { font-size: 11px; color: rgba(232,237,245,0.25); margin-top: -1rem; margin-bottom: 1.25rem; }
     .btn-register {
       width: 100%;
       background: #8ab4d4;
@@ -102,36 +72,13 @@
       margin-bottom: 1rem;
     }
     .btn-register:hover { background: #9dc3df; }
-    .btn-register:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .error-msg {
-      font-size: 12px;
-      color: #F09595;
-      margin-bottom: 1rem;
-      display: none;
-    }
+    .btn-register:disabled { opacity: 0.5; cursor: not-allowed; }
+    .error-msg { font-size: 12px; color: #F09595; margin-bottom: 1rem; display: none; }
     .error-msg.visible { display: block; }
-
-    .success-msg {
-      font-size: 12px;
-      color: #5DCAA5;
-      margin-bottom: 1rem;
-      display: none;
-    }
+    .success-msg { font-size: 12px; color: #5DCAA5; margin-bottom: 1rem; display: none; }
     .success-msg.visible { display: block; }
-
-    .footer-link {
-      text-align: center;
-      font-size: 13px;
-      color: rgba(232,237,245,0.35);
-    }
-    .footer-link a {
-      color: #8ab4d4;
-      text-decoration: none;
-    }
+    .footer-link { text-align: center; font-size: 13px; color: rgba(232,237,245,0.35); }
+    .footer-link a { color: #8ab4d4; text-decoration: none; }
     .footer-link a:hover { text-decoration: underline; }
   </style>
 </head>
@@ -163,7 +110,7 @@
     <p class="error-msg" id="error-msg"></p>
     <p class="success-msg" id="success-msg"></p>
 
-    <button type="button" class="btn-register" id="register-btn" onclick="handleRegister()">create account</button>
+    <button type="button" class="btn-register" id="register-btn">create account</button>
 
     <p class="footer-link">
       already have an account? <a href="login.html">log in</a>
@@ -172,17 +119,8 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      updateProfile
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import {
-      getFirestore,
-      doc,
-      setDoc,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCeHn5ACani1scy-GsrAfGha-ohISaWV2w",
@@ -193,23 +131,27 @@
       appId: "1:27013760765:web:d66cd3c9c21f02f9cce094"
     };
 
-    const app = initializeApp(firebaseConfig);
+    // Initialize Firebase services
+    const app  = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
+    const db   = getFirestore(app);
 
-    window.handleRegister = async function () {
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
+    // Handles the "create account" button click.
+    // Validates the form, creates a Firebase Auth user,
+    // and saves their name/email to Firestore.
+    async function handleRegister() {
+      const name            = document.getElementById("name").value.trim();
+      const email           = document.getElementById("email").value.trim();
+      const password        = document.getElementById("password").value;
       const confirmPassword = document.getElementById("confirm-password").value;
-      const errorMsg = document.getElementById("error-msg");
-      const successMsg = document.getElementById("success-msg");
-      const btn = document.getElementById("register-btn");
+      const errorMsg        = document.getElementById("error-msg");
+      const successMsg      = document.getElementById("success-msg");
+      const btn             = document.getElementById("register-btn");
 
       errorMsg.classList.remove("visible");
       successMsg.classList.remove("visible");
 
-      // Validations
+      // Check that all fields are filled in before proceeding
       if (!name || !email || !password || !confirmPassword) {
         errorMsg.textContent = "please fill in all fields.";
         errorMsg.classList.add("visible");
@@ -230,14 +172,14 @@
       btn.textContent = "creating account...";
 
       try {
-        // Create user in Firebase Auth
+        // Create the Firebase Auth account
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Save display name
+        // Save the display name to the user's Auth profile
         await updateProfile(user, { displayName: name });
 
-        // Save user document in Firestore /users collection
+        //  save user info to the Firestore "users" collection
         await setDoc(doc(db, "users", user.uid), {
           email: email,
           name: name,
@@ -245,30 +187,25 @@
           createdAt: serverTimestamp()
         });
 
-        successMsg.textContent = "account created! redirecting to login...";
+        successMsg.textContent = "account created! redirecting...";
         successMsg.classList.add("visible");
 
-        setTimeout(() => {
-          window.location.href = "login.html";
-        }, 1500);
+        setTimeout(() => { window.location.href = "index.html"; }, 1500);
 
       } catch (err) {
         let msg = "something went wrong. try again.";
-        if (err.code === "auth/email-already-in-use") {
-          msg = "this email is already registered.";
-        } else if (err.code === "auth/invalid-email") {
-          msg = "please enter a valid email address.";
-        } else if (err.code === "auth/weak-password") {
-          msg = "password is too weak.";
-        }
+        if (err.code === "auth/email-already-in-use") msg = "this email is already registered.";
+        else if (err.code === "auth/invalid-email")   msg = "please enter a valid email address.";
+        else if (err.code === "auth/weak-password")   msg = "password is too weak.";
         errorMsg.textContent = msg;
         errorMsg.classList.add("visible");
         btn.disabled = false;
         btn.textContent = "create account";
       }
-    };
+    }
 
-    document.getElementById("confirm-password").addEventListener("keydown", function (e) {
+    document.getElementById("register-btn").addEventListener("click", handleRegister);
+    document.getElementById("confirm-password").addEventListener("keydown", (e) => {
       if (e.key === "Enter") handleRegister();
     });
   </script>

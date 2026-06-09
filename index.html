@@ -4,13 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Smart Lecture Platform</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { min-height: 100%; background: #0a0c10; color: #e8edf5; font-family: system-ui, -apple-system, sans-serif; }
+
     nav { display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 54px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .logo { font-size: 17px; font-weight: 500; }
-    .logo .l1 { color: #e8edf5; }
-    .logo .l2 { color: #8ab4d4; }
+    .logo .l1 { color: #e8edf5; } .logo .l2 { color: #8ab4d4; }
     .nav-right { display: flex; gap: 1.25rem; align-items: center; }
     .nav-link { font-size: 13px; color: rgba(232,237,245,0.45); text-decoration: none; }
     .nav-link:hover { color: #8ab4d4; }
@@ -21,10 +22,11 @@
     .nav-user-name span { color: #8ab4d4; }
     .btn-logout { font-size: 12px; color: rgba(232,237,245,0.35); background: none; border: none; cursor: pointer; font-family: inherit; padding: 0; }
     .btn-logout:hover { color: #e8edf5; }
+
+    /* ── LANDING ── */
     .hero { padding: 5rem 1.5rem 3.5rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.08); }
     .hero-brand { font-size: 24px; font-weight: 500; margin-bottom: 1.75rem; }
-    .hero-brand .l1 { color: #e8edf5; }
-    .hero-brand .l2 { color: #8ab4d4; }
+    .hero-brand .l1 { color: #e8edf5; } .hero-brand .l2 { color: #8ab4d4; }
     .hero h1 { font-size: 36px; font-weight: 500; line-height: 1.2; color: #e8edf5; margin-bottom: 1rem; }
     .hero h1 span { color: #8ab4d4; }
     .hero p { font-size: 15px; color: rgba(232,237,245,0.45); max-width: 420px; margin: 0 auto 2.25rem; line-height: 1.7; }
@@ -33,21 +35,12 @@
     .btn-main:hover { background: #9dc3df; }
     .btn-sec { background: transparent; color: rgba(232,237,245,0.6); font-size: 14px; padding: 10px 24px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.12); cursor: pointer; text-decoration: none; display: inline-block; }
     .btn-sec:hover { background: rgba(255,255,255,0.04); }
+
     .upload { padding: 3rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
     .upload-inner { max-width: 520px; margin: 0 auto; background: #0e1117; border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 2rem; }
     .upload-inner h3 { font-size: 16px; font-weight: 500; color: #e8edf5; margin-bottom: 0.3rem; }
-    .upload-inner p { font-size: 13px; color: rgba(232,237,245,0.4); margin-bottom: 1rem; }
-    .url-row { display: flex; gap: 8px; margin-top: 1rem; }
-    .url-row input { flex: 1; background: #0a0c10; border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; color: #e8edf5; font-size: 13px; padding: 9px 12px; outline: none; font-family: inherit; }
-    .url-row input::placeholder { color: rgba(232,237,245,0.2); }
-    .url-row input:focus { border-color: rgba(138,180,212,0.4); }
-    .url-row button { background: #8ab4d4; color: #0a0c10; font-size: 13px; font-weight: 500; padding: 9px 18px; border-radius: 6px; border: none; cursor: pointer; white-space: nowrap; font-family: inherit; }
-    .url-row button:hover { background: #9dc3df; }
-    .url-row button:disabled { opacity: 0.5; cursor: not-allowed; }
-    .divider { display: flex; align-items: center; gap: 8px; margin: 1rem 0; font-size: 12px; color: rgba(232,237,245,0.25); }
-    .divider::before, .divider::after { content: ''; flex: 1; border-top: 1px solid rgba(255,255,255,0.08); }
-    .dropzone { border: 1px dashed rgba(255,255,255,0.15); border-radius: 8px; padding: 1.75rem; text-align: center; color: rgba(232,237,245,0.25); font-size: 13px; cursor: pointer; transition: border-color 0.2s; }
-    .dropzone:hover { border-color: rgba(138,180,212,0.3); color: rgba(232,237,245,0.4); }
+    .upload-inner > p { font-size: 13px; color: rgba(232,237,245,0.4); margin-bottom: 1rem; }
+
     .steps { padding: 3rem 1.5rem 4rem; }
     .steps-label { font-size: 11px; color: rgba(232,237,245,0.3); margin-bottom: 1.5rem; text-align: center; letter-spacing: 0.1em; text-transform: uppercase; }
     .steps-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; max-width: 580px; margin: 0 auto; }
@@ -55,6 +48,53 @@
     .step-n { font-size: 11px; color: #8ab4d4; margin-bottom: 0.6rem; }
     .step-card h4 { font-size: 13px; font-weight: 500; color: #e8edf5; margin-bottom: 0.35rem; }
     .step-card p { font-size: 12px; color: rgba(232,237,245,0.35); line-height: 1.6; }
+
+    /* ── SHARED DROPZONE ── */
+    .dropzone {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 140px;
+      position: relative;
+      border: 1px dashed rgba(255,255,255,0.12);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.01);
+      text-align: center;
+      cursor: pointer;
+      transition: all .25s ease;
+    }
+    .dropzone:hover { border-color: rgba(138,180,212,0.5); background: rgba(138,180,212,0.03); }
+    .dropzone.drag-over { border-color: #8ab4d4; background: rgba(138,180,212,0.08); }
+    .dropzone-content { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .dropzone-icon { width: 42px; height: 42px; opacity: .9; }
+    .dropzone-title { color: rgba(232,237,245,.7); font-size: 15px; }
+    .dropzone-subtitle { color: rgba(232,237,245,.35); font-size: 12px; }
+
+    .selected-file { text-align: center; margin-top: 12px; color: #8ab4d4; font-size: 13px; min-height: 18px; }
+
+    .upload-btn {
+      display: block; width: 100%; margin-top: 1rem;
+      background: #8ab4d4; color: #0a0c10;
+      font-size: 13px; font-weight: 500; padding: 14px 18px;
+      border-radius: 6px; border: none; cursor: pointer;
+      font-family: inherit; transition: background 0.2s;
+    }
+    .upload-btn:hover { background: #9dc3df; }
+    .upload-btn:disabled { background: rgba(138,180,212,0.3); color: rgba(10,12,16,0.5); cursor: not-allowed; }
+
+    .status-msg { font-size: 12px; margin-top: 0.75rem; min-height: 18px; text-align: center; }
+    .status-msg.success { color: #6fcf97; }
+    .status-msg.error   { color: #eb5757; }
+    .status-msg.info    { color: rgba(232,237,245,0.45); }
+
+    .transcript-box { display: none; margin-top: 1.25rem; background: #0a0c10; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1rem; }
+    .transcript-box h4 { font-size: 13px; font-weight: 500; color: #e8edf5; margin-bottom: 0.6rem; }
+    .transcript-box-text { font-size: 12px; color: rgba(232,237,245,0.6); line-height: 1.7; max-height: 180px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
+    .download-btn { display: block; width: 100%; margin-top: 0.85rem; background: transparent; color: #8ab4d4; font-size: 13px; font-weight: 500; padding: 9px 18px; border-radius: 6px; border: 1px solid rgba(138,180,212,0.4); cursor: pointer; font-family: inherit; transition: background 0.2s; }
+    .download-btn:hover { background: rgba(138,180,212,0.08); }
+
+    /* ── DASHBOARD ── */
     #dashboard { display: none; }
     .dash-header { padding: 2.5rem 2rem 0; max-width: 780px; margin: 0 auto; }
     .dash-header h2 { font-size: 22px; font-weight: 500; color: #e8edf5; margin-bottom: 0.3rem; }
@@ -63,7 +103,7 @@
     .dash-body { max-width: 780px; margin: 2rem auto; padding: 0 2rem 4rem; display: flex; flex-direction: column; gap: 2rem; }
     .new-upload-card { background: #0e1117; border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 1.75rem; }
     .new-upload-card h3 { font-size: 15px; font-weight: 500; color: #e8edf5; margin-bottom: 0.3rem; }
-    .new-upload-card p { font-size: 13px; color: rgba(232,237,245,0.4); margin-bottom: 1rem; }
+    .new-upload-card > p { font-size: 13px; color: rgba(232,237,245,0.4); margin-bottom: 1rem; }
     .transcripts-section h3 { font-size: 13px; color: rgba(232,237,245,0.35); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; }
     .transcript-list { display: flex; flex-direction: column; gap: 8px; }
     .transcript-item { background: #0e1117; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; transition: border-color 0.2s; }
@@ -79,8 +119,7 @@
     .transcript-item-btn:hover { background: rgba(138,180,212,0.08); }
     .empty-state { text-align: center; padding: 2.5rem; background: #0e1117; border: 1px dashed rgba(255,255,255,0.1); border-radius: 8px; color: rgba(232,237,245,0.3); font-size: 13px; }
     .loading-state { text-align: center; padding: 2rem; color: rgba(232,237,245,0.25); font-size: 13px; }
-    .process-msg { font-size: 12px; color: #5dcaa5; margin-top: 0.75rem; display: none; }
-    .process-msg.visible { display: block; }
+
     @media (max-width: 500px) {
       .steps-row { grid-template-columns: 1fr; }
       .hero h1 { font-size: 26px; }
@@ -106,7 +145,7 @@
     </div>
   </nav>
 
-  <!-- LANDING (logged out) -->
+  <!-- ── index when the user is logged out ── -->
   <div id="landing">
     <section class="hero">
       <div class="hero-brand"><span class="l1">Smart Lecture </span><span class="l2">Platform</span></div>
@@ -120,26 +159,40 @@
     <section class="upload">
       <div class="upload-inner">
         <h3>upload your lecture</h3>
-        <p>paste a video url, or drop the file directly</p>
-        <div class="url-row">
-          <input type="text" placeholder="https://URLvideo.com/..." />
-          <button>process</button>
+        <p>drop an mp3, wav, mp4 or lecture recording</p>
+        <label for="landing-file" class="dropzone" id="landing-dropzone">
+          <div class="dropzone-content">
+            <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none">
+              <path d="M12 15V7" stroke="#8ab4d4" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M8.5 10.5L12 7L15.5 10.5" stroke="#8ab4d4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="3" y="3" width="18" height="18" rx="4" stroke="rgba(255,255,255,.25)"/>
+            </svg>
+            <div class="dropzone-title">Click or drag your file here</div>
+            <div class="dropzone-subtitle">Supports MP3, WAV, MP4, M4A</div>
+          </div>
+          <input type="file" id="landing-file" accept="audio/*,video/*,.mp3,.mp4,.wav,.m4a,.ogg,.webm" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;" />
+        </label>
+        <p class="selected-file" id="landing-selected"></p>
+        <button class="upload-btn" id="landing-upload-btn" disabled>Upload &amp; Transcribe</button>
+        <p class="status-msg info" id="landing-status"></p>
+        <div class="transcript-box" id="landing-transcript-box">
+          <h4>Transcript</h4>
+          <div class="transcript-box-text" id="landing-transcript-text"></div>
+          <button class="download-btn" id="landing-download-btn">Download PDF</button>
         </div>
-        <div class="divider">or</div>
-        <div class="dropzone">drag your video here</div>
       </div>
     </section>
     <section class="steps">
       <div class="steps-label">how it works</div>
       <div class="steps-row">
-        <div class="step-card"><div class="step-n">01</div><h4>upload the video</h4><p>link or file, whatever you've got</p></div>
-        <div class="step-card"><div class="step-n">02</div><h4>ai processes it</h4><p>transcribes and removes silence automatically</p></div>
-        <div class="step-card"><div class="step-n">03</div><h4>read the transcript</h4><p>clean text, saved and ready to study</p></div>
+        <div class="step-card"><div class="step-n">01</div><h4>upload the audio</h4><p>mp3, wav — whatever you've got</p></div>
+        <div class="step-card"><div class="step-n">02</div><h4>ai transcribes it</h4><p>AssemblyAI processes a 1-hour file in ~5 min</p></div>
+        <div class="step-card"><div class="step-n">03</div><h4>download transcript</h4><p>clean pdf, ready to study from</p></div>
       </div>
     </section>
   </div>
 
-  <!-- DASHBOARD (logged in) -->
+  <!-- ── index when the user is logged in ── -->
   <div id="dashboard">
     <div class="dash-header">
       <h2>welcome back, <span id="dash-username"></span></h2>
@@ -148,15 +201,29 @@
     <div class="dash-body">
       <div class="new-upload-card">
         <h3>new transcript</h3>
-        <p>paste a video url, or drop the file directly</p>
-        <div class="url-row">
-          <input type="text" id="dash-url-input" placeholder="https://URLvideo.com/..." />
-          <button id="process-btn" onclick="handleProcess(event)">process</button>
+        <p>drop an mp3, wav, mp4 or lecture recording</p>
+        <label for="dash-file" class="dropzone" id="dash-dropzone">
+          <div class="dropzone-content">
+            <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none">
+              <path d="M12 15V7" stroke="#8ab4d4" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M8.5 10.5L12 7L15.5 10.5" stroke="#8ab4d4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="3" y="3" width="18" height="18" rx="4" stroke="rgba(255,255,255,.25)"/>
+            </svg>
+            <div class="dropzone-title">Click or drag your file here</div>
+            <div class="dropzone-subtitle">Supports MP3, WAV, MP4, M4A</div>
+          </div>
+          <input type="file" id="dash-file" accept="audio/*,video/*,.mp3,.mp4,.wav,.m4a,.ogg,.webm" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;" />
+        </label>
+        <p class="selected-file" id="dash-selected"></p>
+        <button class="upload-btn" id="dash-upload-btn" disabled>Upload &amp; Transcribe</button>
+        <p class="status-msg info" id="dash-status"></p>
+        <div class="transcript-box" id="dash-transcript-box">
+          <h4>Transcript</h4>
+          <div class="transcript-box-text" id="dash-transcript-text"></div>
+          <button class="download-btn" id="dash-download-btn">Download PDF</button>
         </div>
-        <p class="process-msg" id="process-msg">✓ processing started — it will appear in your list shortly.</p>
-        <div class="divider">or</div>
-        <div class="dropzone" id="dropzone">drag your video here</div>
       </div>
+
       <div class="transcripts-section">
         <h3>your transcripts</h3>
         <div class="transcript-list" id="transcript-list">
@@ -166,13 +233,16 @@
     </div>
   </div>
 
-  <script type="module">
+<script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-    import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js";
-    import { getStorage, ref, uploadBytesResumable } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+    import { getFirestore, collection, query, where, orderBy, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
+    // AssemblyAI API key , used to send audio files for transcription
+    const ASSEMBLYAI_KEY = "3cae4ce5993c422fbced9580007b03de";
+
+    // Firebase project configuration
     const firebaseConfig = {
       apiKey: "AIzaSyCeHn5ACani1scy-GsrAfGha-ohISaWV2w",
       authDomain: "smart-lecture-27d96.firebaseapp.com",
@@ -182,34 +252,50 @@
       appId: "1:27013760765:web:d66cd3c9c21f02f9cce094"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const functions = getFunctions(app);
+    //  Firebase services
+    const app     = initializeApp(firebaseConfig);
+    const auth    = getAuth(app);
+    const db      = getFirestore(app);
     const storage = getStorage(app);
 
-    // Auth state listener
+    // ── Auth state listener ─────────────────────────────────────────
+    // This runs every time the user logs in or out.
+    // It decides which view to show: landing page or dashboard.
     onAuthStateChanged(auth, async (user) => {
       if (user) {
+        // User is logged in — show the dashboard
         const name = user.displayName || user.email.split("@")[0];
+
         document.getElementById("landing").style.display = "none";
         document.getElementById("dashboard").style.display = "block";
         document.getElementById("nav-logged-out").style.display = "none";
         document.getElementById("nav-logged-in").style.display = "flex";
         document.getElementById("nav-username").textContent = name;
         document.getElementById("dash-username").textContent = name;
+
+        // Load this user's past transcripts from Firestore
         await loadTranscripts(user.uid);
+
+        // If a transcription was in progress before the page reloaded, resume it
+        resumePendingJob("dash");
       } else {
+        // No user logged in — show the landing page
         document.getElementById("landing").style.display = "block";
         document.getElementById("dashboard").style.display = "none";
         document.getElementById("nav-logged-out").style.display = "flex";
         document.getElementById("nav-logged-in").style.display = "none";
+
+        resumePendingJob("landing");
       }
     });
 
+    // ── Load past transcripts from Firestore ───────────────────────
+    // Fetches all transcripts belonging to the logged-in user,
+    // sorted from newest to oldest, and renders them as list items.
     async function loadTranscripts(uid) {
       const list = document.getElementById("transcript-list");
       try {
+        // Query Firestore: get transcripts where uid matches, newest first
         const q = query(
           collection(db, "transcripts"),
           where("uid", "==", uid),
@@ -218,20 +304,26 @@
         const snapshot = await getDocs(q);
 
         if (snapshot.empty) {
-          list.innerHTML = `<div class="empty-state">no transcripts yet — process your first lecture above.</div>`;
+          list.innerHTML = `<div class="empty-state">no transcripts yet — upload your first lecture above.</div>`;
           return;
         }
 
         list.innerHTML = "";
+
+        // Loop through each transcript document and build an HTML card
         snapshot.forEach((doc) => {
           const data = doc.data();
+
+          // Format the date, or show "—" if missing
           const date = data.createdAt?.toDate
             ? data.createdAt.toDate().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })
             : "—";
+
           const statusClass = `status-${data.status || "processing"}`;
           const statusLabel = data.status || "processing";
           const canView = data.status === "done";
 
+          // Create the list item element
           const item = document.createElement("div");
           item.className = "transcript-item";
           item.innerHTML = `
@@ -243,95 +335,270 @@
           `;
           list.appendChild(item);
         });
-
       } catch (err) {
         console.error("Error loading transcripts:", err);
         list.innerHTML = `<div class="empty-state">could not load transcripts. check your connection.</div>`;
       }
     }
 
-    // Process URL
-    window.handleProcess = async function (event) {
-      const url = document.getElementById("dash-url-input").value.trim();
-      if (!url) return;
-
-      const btn = document.getElementById("process-btn");
-      const msg = document.getElementById("process-msg");
-      btn.disabled = true;
-      btn.textContent = "processing...";
-      msg.classList.remove("visible");
-
-      try {
-        const processVideo = httpsCallable(functions, "processVideo");
-        await processVideo({
-          videoUrl: url,
-          title: url.split("/").pop()?.split("?")[0] || "New transcript"
-        });
-
-        btn.disabled = false;
-        btn.textContent = "process";
-        document.getElementById("dash-url-input").value = "";
-        msg.classList.add("visible");
-        await loadTranscripts(auth.currentUser.uid);
-
-      } catch (err) {
-        console.error(err);
-        btn.disabled = false;
-        btn.textContent = "process";
-        alert("Error: " + err.message);
-      }
-    };
-
-    // Upload local file to Firebase Storage
-    const dropzone = document.getElementById("dropzone");
-    dropzone.addEventListener("dragover", (e) => { e.preventDefault(); dropzone.style.borderColor = "rgba(138,180,212,0.5)"; });
-    dropzone.addEventListener("dragleave", () => { dropzone.style.borderColor = ""; });
-    dropzone.addEventListener("drop", (e) => {
-      e.preventDefault();
-      dropzone.style.borderColor = "";
-      const file = e.dataTransfer.files[0];
-      if (file) uploadFile(file);
-    });
-    dropzone.addEventListener("click", () => {
-      const input = document.createElement("input");
-      input.type = "file";
-      input.accept = "video/*,audio/*";
-      input.onchange = (e) => { if (e.target.files[0]) uploadFile(e.target.files[0]); };
-      input.click();
-    });
-
-    async function uploadFile(file) {
-      const uid = auth.currentUser?.uid;
-      if (!uid) return;
-
-      dropzone.textContent = "uploading...";
-      const storageRef = ref(storage, `uploads/${uid}/${Date.now()}_${file.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      uploadTask.on("state_changed",
-        (snapshot) => {
-          const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-          dropzone.textContent = `uploading... ${pct}%`;
-        },
-        (err) => {
-          console.error(err);
-          dropzone.textContent = "upload failed. try again.";
-          setTimeout(() => { dropzone.textContent = "drag your video here"; }, 3000);
-        },
-        async () => {
-          dropzone.textContent = "✓ uploaded — processing started";
-          setTimeout(() => { dropzone.textContent = "drag your video here"; }, 3000);
-          await loadTranscripts(uid);
-        }
-      );
+    // ── Status message helper ──────────────────────────────────────
+    // Updates the small status text below the upload button.
+    // type can be "info", "success", or "error" (controls text color via CSS)
+    function setStatus(prefix, text, type = "info") {
+      const el = document.getElementById(`${prefix}-status`);
+      el.textContent = text;
+      el.className = `status-msg ${type}`;
     }
 
-    // Logout
+    // ── Show transcript result ─────────────────────────────────────
+    // Displays the transcript text in the result box and wires up
+    // the "Download PDF" button using jsPDF.
+    function showTranscript(prefix, text, filename) {
+      document.getElementById(`${prefix}-transcript-text`).textContent = text;
+
+      const box = document.getElementById(`${prefix}-transcript-box`);
+      box.style.display = "block";
+
+      // When the user clicks "Download PDF", generate a PDF with jsPDF
+      document.getElementById(`${prefix}-download-btn`).onclick = () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ unit: "pt", format: "letter" });
+
+        const margin = 50;
+        const lineHeight = 14;
+        const pageHeight = doc.internal.pageSize.getHeight();
+        const maxWidth = doc.internal.pageSize.getWidth() - margin * 2;
+
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(11);
+
+        // Split text into lines that fit the page width
+        const lines = doc.splitTextToSize(text, maxWidth);
+        let y = margin;
+
+        // Write each line, adding a new page when we run out of space
+        lines.forEach(line => {
+          if (y + lineHeight > pageHeight - margin) {
+            doc.addPage();
+            y = margin;
+          }
+          doc.text(line, margin, y);
+          y += lineHeight;
+        });
+
+        // Save the PDF with the original filename (minus extension)
+        doc.save(filename.replace(/\.[^.]+$/, "") + "_transcript.pdf");
+      };
+    }
+
+    // ── Send audio to AssemblyAI for transcription ─────────────────
+    // Submits the audio URL to AssemblyAI and starts polling for results.
+    // The job ID is saved to localStorage so we can resume if page reloads.
+    async function transcribeWithAssemblyAI(prefix, audioUrl, filename) {
+      setStatus(prefix, "Submitting to AssemblyAI…", "info");
+
+      // POST request to start a new transcription job
+      const submitRes = await fetch("https://api.assemblyai.com/v2/transcript", {
+        method: "POST",
+        headers: {
+          "authorization": ASSEMBLYAI_KEY,
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({ audio_url: audioUrl, language_detection: true })
+      });
+
+      if (!submitRes.ok) {
+        const err = await submitRes.json();
+        throw new Error(err.error || "Failed to submit transcription");
+      }
+
+      const { id } = await submitRes.json();
+
+      // Save job info so we can resume if the page is reloaded
+      localStorage.setItem("assemblyai_job", JSON.stringify({ id, filename, prefix }));
+
+      setStatus(prefix, "Transcribing… a 1-hour lecture takes ~5 min.", "info");
+
+      // Start checking AssemblyAI every 5 seconds for the result
+      pollTranscript(prefix, id, filename);
+    }
+
+    // ── Poll AssemblyAI until transcription is done ────────────────
+    // Checks the status every 5 seconds. When done, shows the result.
+    function pollTranscript(prefix, id, filename) {
+      const interval = setInterval(async () => {
+        try {
+          const res  = await fetch(`https://api.assemblyai.com/v2/transcript/${id}`, {
+            headers: { "authorization": ASSEMBLYAI_KEY }
+          });
+          const data = await res.json();
+
+          if (data.status === "completed") {
+            // Done! Stop polling and display the transcript
+            clearInterval(interval);
+            localStorage.removeItem("assemblyai_job");
+            setStatus(prefix, "Transcription complete!", "success");
+            showTranscript(prefix, data.text, filename);
+            document.getElementById(`${prefix}-upload-btn`).disabled = false;
+
+            // Save the finished transcript to Firestore under the logged-in user
+            if (auth.currentUser) {
+              try {
+                await addDoc(collection(db, "transcripts"), {
+                  uid: auth.currentUser.uid,
+                  title: filename.replace(/^\d+_/, "").replace(/\.[^.]+$/, ""),
+                  transcript: data.text,
+                  status: "done",
+                  createdAt: serverTimestamp()
+                });
+                // Refresh the list so the new transcript appears immediately
+                await loadTranscripts(auth.currentUser.uid);
+              } catch (err) {
+                console.error("Error saving transcript to Firestore:", err);
+              }
+            }
+
+          } else if (data.status === "error") {
+            // Something went wrong on AssemblyAI's side
+            clearInterval(interval);
+            localStorage.removeItem("assemblyai_job");
+            setStatus(prefix, "Transcription error: " + data.error, "error");
+            document.getElementById(`${prefix}-upload-btn`).disabled = false;
+
+          } else {
+            // Still processing — show current status and % if available
+            // TODO: you could improve this by showing a progress bar
+            const pct = data.audio_duration
+              ? Math.round((data.audio_start_from || 0) / data.audio_duration * 100)
+              : null;
+            setStatus(prefix, `Transcribing… ${data.status}${pct ? ` (${pct}%)` : ""}`, "info");
+          }
+        } catch (e) {
+          console.warn("Poll error:", e);
+        }
+      }, 5000);
+    }
+
+    // ── Resume a transcription job after page reload ───────────────
+    // Checks localStorage for a saved job and resumes polling if found.
+    function resumePendingJob(prefix) {
+      const savedJob = localStorage.getItem("assemblyai_job");
+      if (savedJob) {
+        try {
+          const { id, filename, prefix: savedPrefix } = JSON.parse(savedJob);
+          const usePrefix = savedPrefix || prefix;
+          setStatus(usePrefix, "Resuming transcription job…", "info");
+          pollTranscript(usePrefix, id, filename);
+        } catch (e) {
+          // If the saved data is corrupted, just clear it
+          localStorage.removeItem("assemblyai_job");
+        }
+      }
+    }
+
+    // ── Set up a file dropzone ─────────────────────────────────────
+    // Handles drag-and-drop, file selection, and the upload flow
+    // for both the landing page and the dashboard (using a prefix).
+    function initDropzone(prefix) {
+      const dropzone  = document.getElementById(`${prefix}-dropzone`);
+      const fileInput = document.getElementById(`${prefix}-file`);
+      const uploadBtn = document.getElementById(`${prefix}-upload-btn`);
+
+      // Highlight the dropzone when a file is dragged over it
+      dropzone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropzone.classList.add("drag-over");
+      });
+      dropzone.addEventListener("dragleave", () => dropzone.classList.remove("drag-over"));
+
+      // Handle file dropped onto the dropzone
+      dropzone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropzone.classList.remove("drag-over");
+        if (!auth.currentUser) { window.location.href = "login.html"; return; }
+        const file = e.dataTransfer.files[0];
+        if (file) {
+          // Manually assign the dropped file to the hidden input
+          const dt = new DataTransfer();
+          dt.items.add(file);
+          fileInput.files = dt.files;
+          onFileSelected(prefix, file);
+        }
+      });
+
+      // If the user isn't logged in and clicks the dropzone, send them to register
+      dropzone.addEventListener("click", (e) => {
+        if (!auth.currentUser) {
+          e.preventDefault();
+          window.location.href = "register.html";
+        }
+      });
+
+      // Handle file selected via the file picker dialog
+      fileInput.addEventListener("change", () => {
+        if (!auth.currentUser) { window.location.href = "register.html"; return; }
+        if (fileInput.files[0]) onFileSelected(prefix, fileInput.files[0]);
+      });
+
+      // Handle the "Upload & Transcribe" button click
+      uploadBtn.addEventListener("click", async () => {
+        if (!auth.currentUser) { window.location.href = "login.html"; return; }
+
+        const file = fileInput.files[0];
+        if (!file) { setStatus(prefix, "Please select a file first.", "error"); return; }
+
+        uploadBtn.disabled = true;
+        document.getElementById(`${prefix}-transcript-box`).style.display = "none";
+
+        // Give the file a unique name using a timestamp to avoid collisions
+        const filename = `${Date.now()}_${file.name}`;
+        const storageRef = ref(storage, `audio/${filename}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        setStatus(prefix, "Uploading…", "info");
+
+        // Listen to upload progress events
+        uploadTask.on(
+          "state_changed",
+          (snap) => {
+            // Show upload percentage while the file transfers
+            const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
+            setStatus(prefix, `Uploading… ${pct}%`, "info");
+          },
+          (err) => {
+            // Upload failed
+            setStatus(prefix, "Upload failed: " + err.message, "error");
+            uploadBtn.disabled = false;
+          },
+          async () => {
+            // Upload complete — get the public download URL and start transcribing
+            try {
+              const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+              await transcribeWithAssemblyAI(prefix, downloadUrl, filename);
+            } catch (err) {
+              setStatus(prefix, "Error: " + err.message, "error");
+              uploadBtn.disabled = false;
+            }
+          }
+        );
+      });
+    }
+
+    // Called when a file is selected — updates the label and enables the button
+    function onFileSelected(prefix, file) {
+      document.getElementById(`${prefix}-selected`).textContent = "Selected: " + file.name;
+      document.getElementById(`${prefix}-upload-btn`).disabled = false;
+    }
+
+    // Initialize dropzones for both the landing page and the dashboard
+    initDropzone("landing");
+    initDropzone("dash");
+
+    // ── Global functions used by inline onclick handlers ───────────
     window.handleLogout = async function () {
       await signOut(auth);
     };
 
-    // View transcript
     window.viewTranscript = function (id) {
       window.location.href = `transcript.html?id=${id}`;
     };
