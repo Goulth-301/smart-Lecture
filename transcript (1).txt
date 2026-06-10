@@ -1,0 +1,51 @@
+from google.cloud import videointelligence
+
+# 1. Initialize Clients
+video_client = videointelligence.VideoIntelligenceServiceClient()
+features = [videointelligence.Feature.SPEECH_TRANSCRIPTION]
+storage_client = storage.Client()
+
+# Change "en-US" to "pl-PL" if the lecture is in Polish
+# 2. Configure Transcription
+features = [videointelligence.Feature.SPEECH_TRANSCRIPTION]
+config = videointelligence.SpeechTranscriptionConfig(
+    language_code="en-US", 
+    language_code="en-US", # Change to "pl-PL" if lecture is in Polish
+    enable_automatic_punctuation=True
+)
+video_context = videointelligence.VideoContext(speech_transcription_config=config)
+
+input_uri = "gs://videostoragebucket22/Operating Systems I - Lecture 1-20251001_081758-Nagrywanie spotkania 1.mp4"
+output_filename = "lecture_transcript.txt"
+
+print(f"Processing video: {input_uri}")
+
+# 3. Run the Operation
+operation = video_client.annotate_video(
+    request={
+        "features": features,
+@@ -21,7 +24,22 @@ operation = video_client.annotate_video(
+    }
+)
+
+result = operation.result(timeout=900)
+# Wait for completion (Lecture videos take time!)
+result = operation.result(timeout=1800)
+
+# 4. Extract and Save Transcript locally
+print("Transcription complete. Saving to file...")
+transcript_text = ""
+for speech_transcription in result.annotation_results[0].speech_transcriptions:
+    for alternative in speech_transcription.alternatives:
+        print(f"Transcript: {alternative.transcript}\n")
+        transcript_text += alternative.transcript + "\n"
+
+with open(output_filename, "w") as f:
+    f.write(transcript_text)
+
+# 5. Upload to your transcript9918 bucket
+bucket = storage_client.bucket("transcript9918")
+blob = bucket.blob(output_filename)
+blob.upload_from_filename(output_filename)
+
+print(f"Success! Transcript saved to gs://transcript9918/{output_filename}")
